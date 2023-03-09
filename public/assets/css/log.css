@@ -1,0 +1,18 @@
+form {
+    width: max-content;
+    padding: 1rem;
+    gap: 15px;
+    border-radius: 15px;
+}
+
+label {
+    width: 100%;
+}
+
+.form__wrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+}
