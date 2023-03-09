@@ -1,0 +1,39 @@
+.home__container {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
+        ". user-line ."
+        ". user ."
+        ". . ."
+        "beehive . production"
+        "beehive-line . production-line";
+}
+
+.home__wrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.home__wrapper:nth-child(1) {
+    grid-area: user;
+    transform: translate(0, 50%)
+}
+
+.home__wrapper:nth-child(2) {
+    grid-area: beehive;
+    transform: translate(50%, -50%);
+}
+
+.home__wrapper:nth-child(3) {
+    grid-area: production;
+    transform: translate(-50%, -50%);
+}
+
+.home__wrapper img {
+    width: 80%;
+}
