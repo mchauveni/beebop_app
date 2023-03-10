@@ -1,16 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Test Fixtures
+{% endblock %}
 
 {% block body %}
-	{% for beekeeper in beekeepers %}
-		<p style="color: red">{{beekeeper.login}}
-			-
-			{{beekeeper.mail}}</p>
-		{% for apiary in beekeeper.apiaries %}
-			<p>{{apiary.name}}
-				-
-				{{apiary.localisation}}</p>
-		{% endfor %}
-	{% endfor %}
-{% endblock %}
+	<div class="container p-5">
+		<h1>Test Fixtures</h1>
+		<table class="table table-striped">
+			<tbody>
+				{% for beekeeper in beekeepers %}
+					<td>
+						<p class="fw-bold">Apiculteur :
+							{{beekeeper.login}}
+							-
+							{{beekeeper.mail}}</p>
+
+						{% for apiary in beekeeper.apiaries %}
+							<p>Rucher :
+								{{apiary.name}}
+								-
+								{{apiary.localisation}}</p>
+							<span class="badge text-bg-warning my-2">Nombre de ruches :
+								{{apiary.beehives|length}}</span>
+						{% endfor %}
+					</td>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</tbody>
+</table></div>{% endblock %}
