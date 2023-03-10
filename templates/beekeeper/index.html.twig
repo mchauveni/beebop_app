@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	{% for beekeeper in beekeepers %}
+		<p style="color: red">{{beekeeper.login}}
+			-
+			{{beekeeper.mail}}</p>
+		{% for apiary in beekeeper.apiaries %}
+			<p>{{apiary.name}}
+				-
+				{{apiary.localisation}}</p>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}
