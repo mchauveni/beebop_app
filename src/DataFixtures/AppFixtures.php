@@ -3,11 +3,13 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Task;
 use App\Entity\Admin;
-use App\Entity\Beekeeper;
 use App\Entity\Apiary;
-use App\Entity\Beehive;
 use DateTimeImmutable;
+use App\Entity\Beehive;
+use App\Entity\Product;
+use App\Entity\Beekeeper;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -20,6 +22,12 @@ class AppFixtures extends Fixture
 
     const MAX_BEEHIVES = 25;
 
+    const MAX_TASKS = 6;
+
+    const MAX_PRODUCTS = 10;
+
+    const PRODUCTS = ["miel", "cire", "pollen"];
+
     const RACE_BEES = ["noire", "caucasienne", "carnica", "italienne", "buckfast"];
 
     public function load(ObjectManager $manager)
@@ -30,10 +38,10 @@ class AppFixtures extends Fixture
     public function loadBeekeeper(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $apiaries = [];
 
         // création des apiculteurs
         for ($i = 0; $i < self::MAX_BEEKEEPERS; $i++) {
+            echo "MAX_BEEKEEPERS $i\n";
             $beekeeper = new Beekeeper();
             $beekeeper
                 ->setLastName($faker->lastName())
@@ -44,43 +52,55 @@ class AppFixtures extends Fixture
                 ->setVerified(false)
                 ->setPassword($faker->password());
 
-            // création des ruchers
-            for ($j = 0; $j < self::MAX_APIARIES; $j++) {
-                $apiary = new Apiary();
-                $apiary
-                    ->setName($faker->word())
-                    ->setZipCode((int)$faker->postcode())
-                    ->setLocalisation($faker->address());
-                $manager->persist($apiary);
-                $apiaries[] = $apiary;
-
-                // création des ruches
-                for ($k = 0; $k < self::MAX_BEEHIVES; $k++) {
-                    $beehive = new Beehive();
-                    $beehive
-                        ->setName($faker->word())
-                        ->setRace($faker->randomElement(self::RACE_BEES));
-
-                    $manager->persist($beehive);
-                    $beehives[] = $beehive;
-                }
-
-                // attribution des ruches de manière aléatoire
-                $randombeehives = $faker->randomElements($beehives, $faker->numberBetween(3, 25));
-                foreach ($randombeehives as $beehive) {
-                    $apiary->addBeehive($beehive);
-                }
-            }
-
-            // attribution des ruchers de manière aléatoire
-            $randomApiaries = $faker->randomElements($apiaries, $faker->numberBetween(1, 4));
-            foreach ($randomApiaries as $apiary) {
-                $beekeeper->addApiary($apiary);
-            }
-
             $manager->persist($beekeeper);
+            $this->addReference('Beekeeper-' . ($i), $beekeeper);
+        }
+        // création des ruchers
+        for ($j = 0; $j < self::MAX_APIARIES; $j++) {
+            $apiary = new Apiary();
+            $apiary
+                ->setName($faker->word())
+                ->setZipCode((int)$faker->postcode())
+                ->setLocalisation($faker->address())
+                ->setBeekeeper($this->getReference('Beekeeper-' . random_int(0, self::MAX_BEEKEEPERS - 1)));
+            $this->addReference('Apiary-' . ($j), $apiary);
+            $manager->persist($apiary);
+        }
+        // création des ruches
+        for ($k = 0; $k < self::MAX_BEEHIVES; $k++) {
+            $beehive = new Beehive();
+            $beehive
+                ->setName($faker->word())
+                ->setRace($faker->randomElement(self::RACE_BEES))
+                ->setApiary($this->getReference('Apiary-' . random_int(0, self::MAX_APIARIES - 1)));
+
+            $manager->persist($beehive);
+            $this->addReference('Beehive-' . ($k), $beehive);
         }
 
+        // création des tâches
+        for ($l = 0; $l < self::MAX_TASKS; $l++) {
+            $task = new Task();
+            $task
+                ->setType($faker->word())
+                ->setDescription($faker->paragraph(3, true))
+                ->setDoAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
+                ->setBeehive($this->getReference('Beehive-' . random_int(0, self::MAX_BEEHIVES - 1)));
+
+            $manager->persist($task);
+        }
+
+        // création des produits
+        for ($m = 0; $m < self::MAX_PRODUCTS; $m++) {
+            $product = new Product();
+            $product
+                ->setType($faker->randomElement(self::PRODUCTS))
+                ->setDate(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
+                ->setQuantity($faker->randomDigitNotNull())
+                ->setBeehive($this->getReference('Beehive-' . random_int(0, self::MAX_BEEHIVES - 1)));
+
+            $manager->persist($product);
+        }
 
         $manager->flush();
     }
