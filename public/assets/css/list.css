@@ -1,0 +1,50 @@
+.beehive__container {
+    padding: 0px 25px;
+    gap: 15px;
+}
+
+.beehive__add {
+    margin-bottom: 15px;
+}
+
+.beehive__wrapper {
+    gap: 15px;
+}
+
+.beehive {
+    font-size: 0.8rem;
+    font-family: k2d;
+    color: var(--dark);
+    background: var(--yellow);
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: none;
+}
+
+.beehive__title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.beehive__info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.beehive__info::before {
+    display: block;
+    width: auto;
+    height: 100%;
+    transform-origin: center;
+    transform: scale(0.8);
+
+}
+
+.beehive__loc::before {
+    content: url('./../img/ico/loc.svg');
+}
+
+.beehive__quantity::before {
+    content: url('./../img/ico/beehive.svg');
+}

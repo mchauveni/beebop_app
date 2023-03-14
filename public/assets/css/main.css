@@ -35,8 +35,19 @@ body {
 
 header {
     font-family: righteous;
-    margin: 1.5rem;
+    margin-right: 1.5rem;
     text-align: right;
+}
+
+header h1 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+header h1::before {
+    content: url('./../img/ico/icon.svg');
+    height: 100%;
 }
 
 main {
@@ -98,4 +109,33 @@ h1 {
     height: 100%;
     transform-origin: center;
     transform: scale(0.8);
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-color: var(--ligth);
+    width: 100vw;
+    height: 10vh;
+}
+
+footer nav {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.footer__link {
+    height: 100%;
+}
+
+.footer__link__img {
+    transform: translateY(-25%);
+    height: 100%;
+    object-fit: contain;
+}
+
+.active {
+    transform: translateY(-35%)
 }
