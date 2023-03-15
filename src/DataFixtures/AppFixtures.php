@@ -12,10 +12,17 @@ use App\Entity\Product;
 use App\Entity\Beekeeper;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+    // injecter le service de cryptage
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     const MAX_BEEKEEPERS = 5;
 
     const MAX_APIARIES = 8;
@@ -41,7 +48,6 @@ class AppFixtures extends Fixture
 
         // création des apiculteurs
         for ($i = 0; $i < self::MAX_BEEKEEPERS; $i++) {
-            echo "MAX_BEEKEEPERS $i\n";
             $beekeeper = new Beekeeper();
             $beekeeper
                 ->setLastName($faker->lastName())
@@ -111,10 +117,11 @@ class AppFixtures extends Fixture
         // création d'un nouvel admin
         $admin = new Admin();
         $admin
-            ->setLogin($faker->username())
+            ->setLogin("test")
             ->setMail($faker->email())
-            ->setPassword($faker->password());
-        // persistance de l'entity
+            ->setRoles(['ROLE_ADMIN'])
+            ->setPassword($this->passwordHasher->hashPassword($admin, 'test'));
+        // persistence de l'entity
         $manager->persist($admin);
         // envoie de l'entity
         $manager->flush();

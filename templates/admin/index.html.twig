@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin
+{% endblock %}
+
+{% block body %}
+	{% for beekeeper in beekeepers %}
+		<p>{{beekeeper.lastName}}</p>
+	{% endfor %}
+{% endblock %}
