@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\BeekeeperRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BeekeeperRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: BeekeeperRepository::class)]
-class Beekeeper
+class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +23,7 @@ class Beekeeper
     #[ORM\Column(length: 100)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $login = null;
 
     #[ORM\Column(length: 100)]
@@ -39,12 +41,35 @@ class Beekeeper
     #[ORM\OneToMany(mappedBy: 'beekeeper', targetEntity: Apiary::class)]
     private Collection $apiaries;
 
+    #[ORM\Column]
+    private array $roles = [];
+
     public function __construct()
     {
 
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->apiaries = new ArrayCollection();
     }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        // $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -87,7 +112,21 @@ class Beekeeper
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->login;
+    }
+
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -97,6 +136,15 @@ class Beekeeper
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getMail(): ?string

@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Task;
-use App\Entity\Admin;
 use App\Entity\Apiary;
 use DateTimeImmutable;
 use App\Entity\Beehive;
@@ -54,9 +53,10 @@ class AppFixtures extends Fixture
                 ->setFirstName($faker->firstName())
                 ->setLogin($faker->username())
                 ->setMail($faker->email())
+                ->setRoles(['ROLE_BEEKEEPER'])
                 ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
                 ->setVerified(false)
-                ->setPassword($faker->password());
+                ->setPassword($this->passwordHasher->hashPassword($beekeeper, $faker->password()));
 
             $manager->persist($beekeeper);
             $this->addReference('Beekeeper-' . ($i), $beekeeper);
@@ -115,11 +115,15 @@ class AppFixtures extends Fixture
         // initialisation de faker pour créer de fausses données administrateur
         $faker = Factory::create();
         // création d'un nouvel admin
-        $admin = new Admin();
+        $admin = new Beekeeper();
         $admin
             ->setLogin("test")
+            ->setLastName($faker->lastName())
+            ->setFirstName($faker->firstName())
             ->setMail($faker->email())
             ->setRoles(['ROLE_ADMIN'])
+            ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
+            ->setVerified(true)
             ->setPassword($this->passwordHasher->hashPassword($admin, 'test'));
         // persistence de l'entity
         $manager->persist($admin);

@@ -4,7 +4,10 @@
 {% endblock %}
 
 {% block body %}
-	{% for beekeeper in beekeepers %}
-		<p>{{beekeeper.lastName}}</p>
-	{% endfor %}
+	<div class="container p-4">
+		<a href="{{ path('app_logout') }}" class="btn btn-warning text-white fw-bold mb-3">Se deconnecter</a>
+		{% for beekeeper in beekeepers %}
+			<p>{{beekeeper.lastName}}</p>
+		{% endfor %}
+	</div>
 {% endblock %}

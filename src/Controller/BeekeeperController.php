@@ -26,4 +26,15 @@ class BeekeeperController extends AbstractController
             'beekeepers' => $beekeepers,
         ]);
     }
+    #[Route('/admin', name: 'admin_dashboard')]
+    public function index_admin(
+        BeekeeperRepository $beekeeperRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // récupérer tous les apiculteurs
+        $beekeepers = $beekeeperRepository->findBy([], ['id' => 'DESC']);
+        return $this->render('admin/index.html.twig', [
+            'beekeepers' => $beekeepers,
+        ]);
+    }
 }
