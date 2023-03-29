@@ -61,6 +61,7 @@ class AppFixtures extends Fixture
             $manager->persist($beekeeper);
             $this->addReference('Beekeeper-' . ($i), $beekeeper);
         }
+
         // création des ruchers
         for ($j = 0; $j < self::MAX_APIARIES; $j++) {
             $apiary = new Apiary();
@@ -121,7 +122,7 @@ class AppFixtures extends Fixture
             ->setLastName($faker->lastName())
             ->setFirstName($faker->firstName())
             ->setMail($faker->email())
-            ->setRoles(['ROLE_ADMIN'])
+            ->setRoles(['ROLE_BEEKEEPER'])
             ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
             ->setVerified(true)
             ->setPassword($this->passwordHasher->hashPassword($admin, 'test'));

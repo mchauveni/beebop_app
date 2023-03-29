@@ -46,12 +46,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
         $user = $token->getUser();
+
         switch ($user->getRoles()[0]) {
             case 'ROLE_ADMIN':
                 return new RedirectResponse($this->urlGenerator->generate('app_beekeeper_admin_dashboard'));
                 break;
             case 'ROLE_BEEKEEPER':
-                dd($user->getRoles());
+                return new RedirectResponse($this->urlGenerator->generate('app_beekeeper_index'));
                 break;
             default:
 
