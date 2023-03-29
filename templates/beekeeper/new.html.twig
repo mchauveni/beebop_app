@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Beekeeper{% endblock %}
+
+{% block body %}
+    <h1>Create new Beekeeper</h1>
+
+    {{ include('beekeeper/_form.html.twig') }}
+
+    <a href="{{ path('app_beekeeper_index') }}">back to list</a>
+{% endblock %}
