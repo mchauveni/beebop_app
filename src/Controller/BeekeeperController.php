@@ -21,6 +21,18 @@ class BeekeeperController extends AbstractController
         ]);
     }
 
+    #[Route('/admin', name: 'admin_dashboard')]
+    public function index_admin(
+        BeekeeperRepository $beekeeperRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // récupérer tous les apiculteurs
+        $beekeepers = $beekeeperRepository->findBy([], ['id' => 'DESC']);
+        return $this->render('admin/index.html.twig', [
+            'beekeepers' => $beekeepers,
+        ]);
+    }
+
     #[Route('/new', name: 'app_beekeeper_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BeekeeperRepository $beekeeperRepository): Response
     {
@@ -69,7 +81,7 @@ class BeekeeperController extends AbstractController
     #[Route('/{id}', name: 'app_beekeeper_delete', methods: ['POST'])]
     public function delete(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$beekeeper->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $beekeeper->getId(), $request->request->get('_token'))) {
             $beekeeperRepository->remove($beekeeper, true);
         }
 

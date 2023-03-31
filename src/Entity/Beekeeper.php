@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,8 +9,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: BeekeeperRepository::class)]
+#[UniqueEntity(
+    fields: ['mail', 'login'],
+    message: '"{{ value }}" est déjà utilisé'
+)]
 class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,18 +26,54 @@ class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 100, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $login = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 8,
+        max: 48,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,48}$/',
+        match: false,
+        message: 'Votre mot de passe doit contenir au minimum 1 caractère spécial, 1 chiffre, 1 majuscule et minuscule',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(
+        message: 'Le mail "{{ value }}" n\'est pas valide.',
+    )]
     private ?string $mail = null;
 
     #[ORM\Column]

@@ -1,53 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beekeeper index
+{% block title %}Beebop - Page d'accueil
 {% endblock %}
 
 {% block body %}
-	<h1>Beekeeper index</h1>
-	<div class="beekeepers__opt">
-		<a href="{{ path('app_beekeeper_new') }}">Valider les apiculteurs</a>
-		<a href="{{ path('app_beekeeper_new') }}">Ajouter un apiculteur</a>
-	</div>
-	<div class="searchield"></div>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>LastName</th>
-				<th>FirstName</th>
-				<th>Login</th>
-				<th>Password</th>
-				<th>Mail</th>
-				<th>Verified</th>
-				<th>CreatedAt</th>
-				<th>Roles</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for beekeeper in beekeepers %}
-				<tr>
-					<td>{{ beekeeper.id }}</td>
-					<td>{{ beekeeper.lastName }}</td>
-					<td>{{ beekeeper.firstName }}</td>
-					<td>{{ beekeeper.login }}</td>
-					<td>{{ beekeeper.password }}</td>
-					<td>{{ beekeeper.mail }}</td>
-					<td>{{ beekeeper.verified ? 'Yes' : 'No' }}</td>
-					<td>{{ beekeeper.createdAt ? beekeeper.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ beekeeper.roles ? beekeeper.roles|json_encode : '' }}</td>
-					<td>
-						<a href="{{ path('app_beekeeper_show', {'id': beekeeper.id}) }}">show</a>
-						<a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="10">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-
+	<header class="header">
+		<h2 class="header__name">Beebop</h2>
+	</header>
+	<section class="home">
+		<nav class="home__nav">
+			<ul class="home__list">
+				<li class="home__item">
+					<a href="#" class="home__link">Votre compte</a>
+				</li>
+				<li class="home__item">
+					<a href="#" class="home__link">Gérer vos ruches</a>
+				</li>
+				<li class="home__item">
+					<a href="#" class="home__link">Surveillez vos productions</a>
+				</li>
+			</ul>
+		</nav>
+	</section>
 {% endblock %}
