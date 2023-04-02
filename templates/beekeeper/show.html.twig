@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beekeeper{% endblock %}
+
+{% block body %}
+    <h1>Beekeeper</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ beekeeper.id }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ beekeeper.lastName }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ beekeeper.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Login</th>
+                <td>{{ beekeeper.login }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ beekeeper.password }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ beekeeper.mail }}</td>
+            </tr>
+            <tr>
+                <th>Verified</th>
+                <td>{{ beekeeper.verified ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ beekeeper.createdAt ? beekeeper.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ beekeeper.roles ? beekeeper.roles|json_encode : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_beekeeper_index') }}">back to list</a>
+
+    <a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}">edit</a>
+
+    {{ include('beekeeper/_delete_form.html.twig') }}
+{% endblock %}

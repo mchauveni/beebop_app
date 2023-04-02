@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container p-4">
+		<a href="{{ path('app_logout') }}" class="btn btn-warning text-white fw-bold mb-3">Se deconnecter</a>
+		{% for beekeeper in beekeepers %}
+			<p>{{beekeeper.lastName}}</p>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Beekeeper{% endblock %}
+
+{% block body %}
+    <h1>Edit Beekeeper</h1>
+
+    {{ include('beekeeper/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_beekeeper_index') }}">back to list</a>
+
+    {{ include('beekeeper/_delete_form.html.twig') }}
+{% endblock %}

@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Task;
-use App\Entity\Admin;
 use App\Entity\Apiary;
 use DateTimeImmutable;
 use App\Entity\Beehive;
@@ -12,10 +11,17 @@ use App\Entity\Product;
 use App\Entity\Beekeeper;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AppFixtures extends Fixture
 {
+    private $passwordHasher;
+    // injecter le service de cryptage
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     const MAX_BEEKEEPERS = 5;
 
     const MAX_APIARIES = 8;
@@ -41,20 +47,21 @@ class AppFixtures extends Fixture
 
         // création des apiculteurs
         for ($i = 0; $i < self::MAX_BEEKEEPERS; $i++) {
-            echo "MAX_BEEKEEPERS $i\n";
             $beekeeper = new Beekeeper();
             $beekeeper
                 ->setLastName($faker->lastName())
                 ->setFirstName($faker->firstName())
                 ->setLogin($faker->username())
                 ->setMail($faker->email())
+                ->setRoles(['ROLE_BEEKEEPER'])
                 ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
                 ->setVerified(false)
-                ->setPassword($faker->password());
+                ->setPassword($this->passwordHasher->hashPassword($beekeeper, $faker->password()));
 
             $manager->persist($beekeeper);
             $this->addReference('Beekeeper-' . ($i), $beekeeper);
         }
+
         // création des ruchers
         for ($j = 0; $j < self::MAX_APIARIES; $j++) {
             $apiary = new Apiary();
@@ -109,12 +116,17 @@ class AppFixtures extends Fixture
         // initialisation de faker pour créer de fausses données administrateur
         $faker = Factory::create();
         // création d'un nouvel admin
-        $admin = new Admin();
+        $admin = new Beekeeper();
         $admin
-            ->setLogin($faker->username())
+            ->setLogin("test")
+            ->setLastName($faker->lastName())
+            ->setFirstName($faker->firstName())
             ->setMail($faker->email())
-            ->setPassword($faker->password());
-        // persistance de l'entity
+            ->setRoles(['ROLE_BEEKEEPER'])
+            ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
+            ->setVerified(true)
+            ->setPassword($this->passwordHasher->hashPassword($admin, 'test'));
+        // persistence de l'entity
         $manager->persist($admin);
         // envoie de l'entity
         $manager->flush();

@@ -1,14 +1,24 @@
 <?php
 
+
 namespace App\Entity;
 
-use App\Repository\BeekeeperRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BeekeeperRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 #[ORM\Entity(repositoryClass: BeekeeperRepository::class)]
-class Beekeeper
+#[UniqueEntity(
+    fields: ['mail', 'login'],
+    message: '"{{ value }}" est déjà utilisé'
+)]
+class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,18 +26,54 @@ class Beekeeper
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $login = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 8,
+        max: 48,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
+    #[Assert\Regex(
+        pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,48}$/',
+        match: false,
+        message: 'Votre mot de passe doit contenir au minimum 1 caractère spécial, 1 chiffre, 1 majuscule et minuscule',
+    )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(
+        message: 'Le mail "{{ value }}" n\'est pas valide.',
+    )]
     private ?string $mail = null;
 
     #[ORM\Column]
@@ -39,12 +85,35 @@ class Beekeeper
     #[ORM\OneToMany(mappedBy: 'beekeeper', targetEntity: Apiary::class)]
     private Collection $apiaries;
 
+    #[ORM\Column]
+    private array $roles = [];
+
     public function __construct()
     {
 
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->apiaries = new ArrayCollection();
     }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        // $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -87,7 +156,21 @@ class Beekeeper
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->login;
+    }
+
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -97,6 +180,15 @@ class Beekeeper
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getMail(): ?string
