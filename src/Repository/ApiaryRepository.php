@@ -39,28 +39,44 @@ class ApiaryRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Apiary[] Returns an array of Apiary objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Retourne les informations sur les ruchers associés à l'apiculteur
+     * @return Apiary[]
+     */
+    public function findApiariesByBeekeeper(int $idBeekeeper)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->select('a')
+            ->join('a.beekeeper', 'b')
+            ->where('b.id = :beekeeperId')
+            ->setParameter('beekeeperId', $idBeekeeper);
+        return $qb->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Apiary
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    //    /**
+    //     * @return Apiary[] Returns an array of Apiary objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('a.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Apiary
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

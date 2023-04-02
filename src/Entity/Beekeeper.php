@@ -95,6 +95,10 @@ class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
         $this->apiaries = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->firstName;
+    }
     /**
      * @see UserInterface
      */
