@@ -1,54 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beekeeper{% endblock %}
+{% block title %}Beebop - Votre compte{% endblock %}
 
 {% block body %}
-    <h1>Beekeeper</h1>
+    <h1>Votre compte</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ beekeeper.id }}</td>
-            </tr>
-            <tr>
-                <th>LastName</th>
+                <th>Votre nom :</th>
                 <td>{{ beekeeper.lastName }}</td>
             </tr>
             <tr>
-                <th>FirstName</th>
+                <th>Votre prénom :</th>
                 <td>{{ beekeeper.firstName }}</td>
             </tr>
             <tr>
-                <th>Login</th>
+                <th>Identifiant : </th>
                 <td>{{ beekeeper.login }}</td>
             </tr>
-            <tr>
-                <th>Password</th>
+            {# <tr>
+                <th>Mot de passe :</th>
                 <td>{{ beekeeper.password }}</td>
-            </tr>
+            </tr> #}
             <tr>
-                <th>Mail</th>
+                <th>Adresse mail : </th>
                 <td>{{ beekeeper.mail }}</td>
             </tr>
             <tr>
-                <th>Verified</th>
-                <td>{{ beekeeper.verified ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ beekeeper.createdAt ? beekeeper.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ beekeeper.roles ? beekeeper.roles|json_encode : '' }}</td>
+                <th>Statut :</th>
+                <td>{{ beekeeper.verified ? 'Validé' : 'En attente/refusé' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_beekeeper_index') }}">back to list</a>
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
 
-    <a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}">edit</a>
+    <a href="{{ path('app_beekeeper_index') }}">Retour</a>
+
+    <a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}">Modifier</a>
 
     {{ include('beekeeper/_delete_form.html.twig') }}
 {% endblock %}
