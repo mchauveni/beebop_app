@@ -9,6 +9,15 @@ label {
     width: 100%;
 }
 
+.form__input {
+    width: 100%;
+    background: var(--dark);
+    border: solid 1px var(--grey);
+    border-radius: 8px;
+    padding: 10px 5px;
+    color: var(--light)
+}
+
 .form__wrapper {
     display: flex;
     justify-content: space-around;
