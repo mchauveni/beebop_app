@@ -16,14 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/beehive')]
 class BeehiveController extends AbstractController
 {
-    #[Route('/', name: 'app_beehive_index', methods: ['GET'])]
-    public function index(BeehiveRepository $beehiveRepository): Response
-    {
-        return $this->render('beehive/index.html.twig', [
-            'beehives' => $beehiveRepository->findAll(),
-        ]);
-    }
-
     #[Route('/{id}/new', name: 'app_beehive_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApiaryRepository $apiaryRepository, $id, EntityManagerInterface $em): Response
     {
@@ -51,10 +43,14 @@ class BeehiveController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_beehive_show', methods: ['GET'])]
-    public function show(Beehive $beehive): Response
+    public function show(Beehive $beehive, ApiaryRepository $apiaryRepository): Response
     {
+        $apiary = $apiaryRepository->findBy([
+            'id' => $beehive->getApiary()->getId()
+        ]);
         return $this->render('beehive/show.html.twig', [
             'beehive' => $beehive,
+            'apiary' => $apiary[0]
         ]);
     }
 
@@ -66,8 +62,9 @@ class BeehiveController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $beehiveRepository->save($beehive, true);
+            $idApiary = $beehive->getApiary()->getId();
 
-            return $this->redirectToRoute('app_beehive_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_beehive_by_apiary_show', ['id' => $idApiary], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('beehive/edit.html.twig', [
@@ -76,13 +73,12 @@ class BeehiveController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_beehive_delete', methods: ['POST'])]
-    public function delete(Request $request, Beehive $beehive, BeehiveRepository $beehiveRepository): Response
+    #[Route('/{id}/delete', name: 'app_beehive_delete', methods: ['GET'])]
+    public function delete(Beehive $beehive, BeehiveRepository $beehiveRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $beehive->getId(), $request->request->get('_token'))) {
-            $beehiveRepository->remove($beehive, true);
-        }
+        $idApiary = $beehive->getApiary()->getId();
+        $beehiveRepository->remove($beehive, true);
 
-        return $this->redirectToRoute('app_beehive_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_beehive_by_apiary_show', ['id' => $idApiary], Response::HTTP_SEE_OTHER);
     }
 }
