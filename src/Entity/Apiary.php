@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ApiaryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ApiaryRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ApiaryRepository::class)]
 class Apiary
@@ -16,12 +18,32 @@ class Apiary
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/^[0-9]{5}$/',
+        htmlPattern: '^[0-9]{5}$',
+        message: 'Entrez un code postal valide de 5 chiffres',
+    )]
     private ?int $zipCode = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
     private ?string $localisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'apiaries')]

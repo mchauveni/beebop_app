@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beehive{% endblock %}
+
+{% block body %}
+    <h1>Beehive</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ beehive.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ beehive.name }}</td>
+            </tr>
+            <tr>
+                <th>Race</th>
+                <td>{{ beehive.race }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_beehive_index') }}">back to list</a>
+
+    <a href="{{ path('app_beehive_edit', {'id': beehive.id}) }}">edit</a>
+
+    {{ include('beehive/_delete_form.html.twig') }}
+{% endblock %}

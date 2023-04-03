@@ -1,13 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Apiary{% endblock %}
+{% block title %}Beebop - Modifier votre rucher
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Apiary</h1>
+	<h1>Modifier votre rucher</h1>
 
-    {{ include('apiary/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ form_start(form) }}
 
-    <a href="{{ path('app_apiary_index') }}">back to list</a>
+	<div class="form__wrapper">
+		{{ form_label( form.name ) }}
+		{{ form_errors( form.name ) }}
+		{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+	</div>
 
-    {{ include('apiary/_delete_form.html.twig') }}
+	<div class="form__wrapper">
+		{{ form_label( form.localisation ) }}
+		{{ form_errors( form.localisation ) }}
+		{{ form_widget( form.localisation,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+	</div>
+
+	<div class="form__wrapper">
+		{{ form_label( form.zipCode ) }}
+		{{ form_errors( form.zipCode ) }}
+		{{ form_widget( form.zipCode ) }}
+	</div>
+
+	{{ form_widget(form) }}
+	<div class="form__login">
+		<a href="{{ path('app_apiary_index') }}" class="form__link">Retour à vos ruchers</a>
+		<button type="submit" class="form__btn" formnovalidate>Valider</button>
+	</div>
+	{{ form_end(form) }}
+
 {% endblock %}

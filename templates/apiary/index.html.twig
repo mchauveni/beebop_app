@@ -8,7 +8,7 @@
 		<h1 class="apiaries__title">Vos ruchers</h1>
 
 		<div class="apiaries__btn">
-			<a href="{{ path('app_apiary_new') }}">Ajouter une nouvelle ruche</a>
+			<a href="{{ path('app_apiary_new') }}">Ajouter un nouveau rucher</a>
 		</div>
 
 
@@ -17,10 +17,13 @@
 				{% for apiary in apiaries %}
 					<li>
 						<span class="apiaries__name">{{ apiary.name }}</span>
-						<p class="apiaries__address">{{ apiary.localisation }},{{ apiary.zipCode }}</p>
-						<p class="apiaries__beehives">{{  apiary.beehives| length }}</p>
+						<p class="apiaries__address">{{ apiary.localisation }},
+							{{ apiary.zipCode }}</p>
+						<p class="apiaries__beehives">{{  apiary.beehives | length }}</p>
 
 						<a href="{{ path('app_apiary_delete', {'id': apiary.id}) }}" class="apiries__link">Supprimer</a>
+						<a href="{{ path('app_apiary_edit', {'id': apiary.id}) }}">Modifier</a>
+						<a href="{{ path('app_beehive_by_apiary_show', {'id': apiary.id}) }}">Voir plus</a>
 					</li>
 				{% else %}
 

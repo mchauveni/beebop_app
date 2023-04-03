@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Apiary;
 use App\Form\ApiaryType;
 use App\Repository\ApiaryRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\BeehiveRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/apiary')]
 class ApiaryController extends AbstractController
@@ -21,19 +23,21 @@ class ApiaryController extends AbstractController
 
         return $this->render('apiary/index.html.twig', [
             'apiaries' => $apiaries,
-
         ]);
     }
 
     #[Route('/new', name: 'app_apiary_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ApiaryRepository $apiaryRepository): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $apiary = new Apiary();
         $form = $this->createForm(ApiaryType::class, $apiary);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $apiaryRepository->save($apiary, true);
+            $apiary = $form->getData();
+            $apiary
+                ->setBeekeeper($this->getUser());
+            $em->persist($apiary);
+            $em->flush();
 
             return $this->redirectToRoute('app_apiary_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -44,11 +48,16 @@ class ApiaryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_apiary_show', methods: ['GET'])]
-    public function show(Apiary $apiary): Response
+    #[Route('/{id}', name: 'app_beehive_by_apiary_show', methods: ['GET'])]
+    public function show(Apiary $apiary, BeehiveRepository $beehiveRepository): Response
     {
-        return $this->render('apiary/show.html.twig', [
+        $beehives = $beehiveRepository->findBy([
+            'apiary' => $apiary->getId(),
+        ]);
+
+        return $this->render('beehive/index.html.twig', [
             'apiary' => $apiary,
+            'beehives' => $beehives,
         ]);
     }
 
@@ -70,12 +79,10 @@ class ApiaryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_apiary_delete', methods: ['POST'])]
-    public function delete(Request $request, Apiary $apiary, ApiaryRepository $apiaryRepository): Response
+    #[Route('/{id}/delete', name: 'app_apiary_delete', methods: ['GET'])]
+    public function delete(Apiary $apiary, ApiaryRepository $apiaryRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $apiary->getId(), $request->request->get('_token'))) {
-            $apiaryRepository->remove($apiary, true);
-        }
+        $apiaryRepository->remove($apiary, true);
 
         return $this->redirectToRoute('app_apiary_index', [], Response::HTTP_SEE_OTHER);
     }

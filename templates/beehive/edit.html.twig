@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Beehive{% endblock %}
+
+{% block body %}
+    <h1>Edit Beehive</h1>
+
+    {{ include('beehive/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_beehive_index') }}">back to list</a>
+
+    {{ include('beehive/_delete_form.html.twig') }}
+{% endblock %}

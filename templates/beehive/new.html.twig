@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beebop - Nouvelle ruche
+{% endblock %}
+
+{% block body %}
+	<h1>Créer une nouvelle ruche</h1>
+
+	{{ form_start(form) }}
+
+	<div class="form__wrapper">
+		{{ form_label( form.name ) }}
+		{{ form_errors( form.name ) }}
+		{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+	</div>
+
+	<div class="form__wrapper">
+		{{ form_label( form.race ) }}
+		{{ form_errors( form.race ) }}
+		{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+	</div>
+
+
+	{{ form_widget(form) }}
+	<div class="form__login">
+
+		<a href="{{ path('app_beehive_by_apiary_show', {'id' : idApiary}) }}" class="form__link">Retour au rucher</a>
+		<button type="submit" class="form__btn">Valider</button>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}
