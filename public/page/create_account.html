@@ -1,0 +1,50 @@
+<!-- <?php
+
+use App\Kernel;
+
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+return function (array $context) {
+    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+};
+?> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='./../assets/css/main.css' rel='stylesheet'>
+    <link href='./../assets/css/log.css' rel='stylesheet'>
+    <title>Beebop</title>
+</head>
+
+<body>
+    <header>
+        <h1>Beebop</h1>
+    </header>
+    <main class="f-center a-center">
+        <form class="glass f-column f-center">
+            <h2>Inscrivez vous !</h2>
+            <label for="username">Username :</label>
+            <input type="text" name="username" required>
+            <label for="email">email :</label>
+            <input type="text" name="email" required>
+            <label for="passeword">Mot de passe :</label>
+            <input type="text" name="password" required>
+            <label for="passeword_verifier">Confirmer mot de passe :</label>
+            <input type="text" name="password_verifier" required>
+            <div class="form__wrapper">
+                <a href="../index.html">
+                    Deja un compte ? <br />
+                    Connectez vous
+                </a>
+                <input type="submit" value="Connexion" class="cta">
+            </div>
+        </form>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+.home__container {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+}
+
+.home__wrapper {
+    padding: 10px;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.home__svg {
+    width: 100%;
+    height: auto;
+    stroke: var(--yellow)
+}
+
+.home__svg path {
+    stroke: none;
+}
+
+.home__text {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.home__text h2 {
+    font-size: 1.2rem;
+    width: 50%;
+}

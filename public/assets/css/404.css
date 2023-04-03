@@ -1,0 +1,17 @@
+.NF__illu {
+    position: absolute;
+    width: 120vw;
+    transform: translate(-40%) rotate(60deg);
+}
+
+.NF__main {
+    font-family: righteous;
+}
+
+.NF__main--title {
+    font-size: 4rem;
+}
+
+.NF__main--description {
+    font-size: 2rem;
+}

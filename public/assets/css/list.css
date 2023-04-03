@@ -1,0 +1,72 @@
+.list__container {
+    height: 60vh;
+    overflow-y: scroll;
+    padding: 0px 25px;
+    gap: 15px;
+}
+
+.list__add {
+    width: calc(100% - 50px);
+    margin: 15px 25px;
+    font-size: 1.1rem;
+}
+
+.list__wrapper {
+    gap: 15px;
+}
+
+.list__item__wrapper {
+    gap: 30px;
+}
+
+.list__item__wrapper .list__item {
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+}
+
+.list__item__wrapper .cta {
+    aspect-ratio: 1/1;
+}
+
+.list__item {
+    /* font-size: 0.8rem; */
+    font-family: k2d;
+    color: var(--dark);
+    background: var(--yellow);
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: none;
+}
+
+.list__item__title {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.list__item__info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.list__item__info::before {
+    display: block;
+    width: auto;
+    height: 100%;
+    transform-origin: center;
+    transform: scale(0.8);
+
+}
+
+.list__loc::before {
+    content: url('./../img/ico/loc.svg');
+}
+
+.list__quantity::before {
+    content: url('./../img/ico/beehive.svg');
+}
+
+.list__item__cta {
+    height: 30px;
+}
