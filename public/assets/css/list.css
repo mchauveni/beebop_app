@@ -1,18 +1,36 @@
-.beehive__container {
+.list__container {
+    height: 60vh;
+    overflow-y: scroll;
     padding: 0px 25px;
     gap: 15px;
 }
 
-.beehive__add {
-    margin-bottom: 15px;
+.list__add {
+    width: calc(100% - 50px);
+    margin: 15px 25px;
+    font-size: 1.1rem;
 }
 
-.beehive__wrapper {
+.list__wrapper {
     gap: 15px;
 }
 
-.beehive {
-    font-size: 0.8rem;
+.list__item__wrapper {
+    gap: 30px;
+}
+
+.list__item__wrapper .list__item {
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+}
+
+.list__item__wrapper .cta {
+    aspect-ratio: 1/1;
+}
+
+.list__item {
+    /* font-size: 0.8rem; */
     font-family: k2d;
     color: var(--dark);
     background: var(--yellow);
@@ -21,18 +39,18 @@
     border: none;
 }
 
-.beehive__title {
+.list__item__title {
     font-size: 1.1rem;
     font-weight: bold;
 }
 
-.beehive__info {
+.list__item__info {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-.beehive__info::before {
+.list__item__info::before {
     display: block;
     width: auto;
     height: 100%;
@@ -41,10 +59,14 @@
 
 }
 
-.beehive__loc::before {
+.list__loc::before {
     content: url('./../img/ico/loc.svg');
 }
 
-.beehive__quantity::before {
+.list__quantity::before {
     content: url('./../img/ico/beehive.svg');
+}
+
+.list__item__cta {
+    height: 30px;
 }
