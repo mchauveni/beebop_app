@@ -39,26 +39,6 @@ class BeehiveRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-    * Retourne les informations sur les catégories et le nombre d'articles associés.
-    * @return Category[]
-    */
-    public function findBeehivesByApiaries(array $apiaries,int $beekeeperId)
-    {
-        
-        // exprimer la requête en mode préparé
-        $query = $this->getEntityManager()->createQuery('
-        SELECT b, COUNT(b.id) n
-        FROM App\Entity\Beehive b
-        JOIN App\Entity\Apiary a
-        WHERE b.id = a.beehive
-        GROUP BY b.id
-        ORDER BY n DESC
-        ');
-        return $query->getResult();
-    }
-
-
 
     //    /**
     //     * @return Beehive[] Returns an array of Beehive objects

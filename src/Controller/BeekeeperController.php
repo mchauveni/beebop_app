@@ -53,16 +53,9 @@ class BeekeeperController extends AbstractController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $apiaries = $apiaryRepository->findApiariesByBeekeeper($beekeeper->getId());
-        dd($apiaries);
-        $beehives =0;
-        foreach ($apiary as $apiaries) {
-            $beehive = $beehiveRepository->findBeehivesByApiaries($apiaries, $beekeeper->getId());
-            $beehives = $beehives + $beehive;
-        };
-        dd($beehives);
-
         return $this->render('admin/show.html.twig', [
             'beekeeper' => $beekeeper,
+            'apiaries' => $apiaries,
         ]);
     }
 
