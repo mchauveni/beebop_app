@@ -16,11 +16,10 @@ class TaskType extends AbstractType
     {
         $builder
             ->add('type', TextType::class, ['label' => 'Votre tâche :'])
-            ->add('description',  TextareaType::class, ['label' => 'La description de votre tâche :'])
+            ->add('description',  TextareaType::class, ['label' => 'Description de la tâche :'])
             ->add('doAt', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-                'label' => 'Sélectionner votre date : '
+                'input' => 'datetime_immutable', 'widget' => 'single_text',
+                'label' => 'Date de la tâche :'
             ]);
     }
 

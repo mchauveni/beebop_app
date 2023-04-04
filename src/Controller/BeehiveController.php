@@ -46,10 +46,6 @@ class BeehiveController extends AbstractController
     #[Route('/{id}', name: 'app_beehive_show', methods: ['GET'])]
     public function show(Beehive $beehive, ApiaryRepository $apiaryRepository, TaskRepository $taskRepository): Response
     {
-        // dd($taskRepository->findBy([
-        //     'id_beehive' => $beehive->getId()
-        // ]));
-
         $tasks = $taskRepository->findTasksByBeehiveId($beehive->getId());
 
         $apiary = $apiaryRepository->findBy([
