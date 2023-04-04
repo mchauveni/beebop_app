@@ -7,9 +7,10 @@ form {
 
 label {
     width: 100%;
+    text-align: start;
 }
 
-.form__input {
+:is(.form__input, .form__wrapper input, .form__wrapper select) {
     width: 100%;
     background: var(--dark);
     border: solid 1px var(--grey);
@@ -19,9 +20,16 @@ label {
 }
 
 .form__wrapper {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     gap: 15px;
     text-align: center;
     font-size: 0.8rem;
+}
+
+form[name="beehive"] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
