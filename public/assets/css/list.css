@@ -6,6 +6,7 @@
 }
 
 .list__add {
+    color: var(--dark);
     width: calc(100% - 50px);
     margin: 15px 25px;
     font-size: 1.1rem;
@@ -69,4 +70,14 @@
 
 .list__item__cta {
     height: 30px;
+}
+
+
+:is(.list__item__component, .list__item__menu) {
+    gap: 10px
+}
+
+
+.close {
+    display: none !important;
 }
