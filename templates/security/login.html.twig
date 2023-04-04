@@ -4,29 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<section>
-		<h1 class="form__title">Connectez-vous !</h1>
-		<form method="post" class="form">
+	<header>
+		<h1>Beebop</h1>
+	</header>
+	<main class="a-center f-center">
+		<form method="post" class="glass f-column f-center form">
+			<h1 class="form__title">Connectez-vous !</h1>
 			{% if error %}
 				<div>Erreur d'authentification.</div>
 			{% endif %}
 
-			<div class="form__wrapper">
-				<label for="inputLogin">Votre identifiant :</label>
-				<input type="text" value="{{ last_username }}" name="login" id="inputLogin" autocomplete="username" required autofocus placeholder="flouet">
-			</div>
-			<div class="form__wrapper">
-				<label for="inputPassword">Votre mot de passe :</label>
-				<input type="password" name="password" id="inputPassword" autocomplete="current-password" required>
-			</div>
+			<label for="inputLogin">Votre identifiant :</label>
+			<input type="text" value="{{ last_username }}" name="login" id="inputLogin" autocomplete="username" class="form__input" required autofocus placeholder="flouet">
+			<label for="inputPassword">Votre mot de passe :</label>
+			<input type="password" name="password" id="inputPassword" autocomplete="current-password" class="form__input" required>
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			<div class="form__login">
-				<a href="{{ path('app_beekeeper_register') }}" class="form__link">Pas de compte ? Incrivez-vous</a>
-				<button class="form__btn" type="submit">
+			<div class="form__wrapper">
+				<a href="{{ path('app_beekeeper_register') }}" class="form__link">Pas de compte ?
+					<br>
+					Incrivez-vous</a>
+				<button class="cta" type="submit">
 					Connexion
 				</button>
 			</div>
 		</form>
-	</section>
+	</main>
 {% endblock %}
