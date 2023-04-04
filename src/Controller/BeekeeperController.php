@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Apiary;
+use App\Entity\Beehive;
 use App\Entity\Beekeeper;
 use App\Form\BeekeeperType;
 use App\Repository\BeekeeperRepository;
@@ -32,11 +34,12 @@ class BeekeeperController extends AbstractController
 
     #[Route('/admin', name: 'admin_dashboard')]
     public function index_admin(
-        BeekeeperRepository $beekeeperRepository
+        BeekeeperRepository $beekeeperRepository,
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // récupérer tous les apiculteurs
-        $beekeepers = $beekeeperRepository->findBy([], ['id' => 'DESC']);
+        $beekeepers = $beekeeperRepository->findBy(['verified' => true], ['id' => 'DESC']);
+
         return $this->render('admin/index.html.twig', [
             'beekeepers' => $beekeepers,
         ]);
@@ -44,11 +47,60 @@ class BeekeeperController extends AbstractController
 
     #[Route('/admin/{id}', name: 'admin_beekeeper_show')]
     public function showBeekeeper_admin(
+        Beekeeper $beekeeper,
+        ApiaryRepository $apiaryRepository,
+        BeehiveRepository $beehiveRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $apiaries = $apiaryRepository->findApiariesByBeekeeper($beekeeper->getId());
+        dd($apiaries);
+        $beehives =0;
+        foreach ($apiary as $apiaries) {
+            $beehive = $beehiveRepository->findBeehivesByApiaries($apiaries, $beekeeper->getId());
+            $beehives = $beehives + $beehive;
+        };
+        dd($beehives);
+
+        return $this->render('admin/show.html.twig', [
+            'beekeeper' => $beekeeper,
+        ]);
+    }
+
+    #[Route('/admin/{id}/awaiting', name: 'admin_beekeeper_await_show')]
+    public function showBeekeeperAwait_admin(
         Beekeeper $beekeeper
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        // récupérer tous les apiculteurs
         $beekeeper = $beekeeper;
+        return $this->render('admin/showAwait.html.twig', [
+            'beekeeper' => $beekeeper,
+        ]);
+    }
+
+    #[Route('/admin_validation', name: 'admin_validation')]
+    public function validate(
+        BeekeeperRepository $beekeeperRepository
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // récupérer tous les apiculteurs
+        $beekeepers = $beekeeperRepository->findBy(['verified' => false], ['id' => 'DESC']);
+        return $this->render('admin/validate.html.twig', [
+            'beekeepers' => $beekeepers,
+        ]);
+    }
+
+    #[Route('/admin/{id}/confirm', name: 'admin_beekeeper_confirm')]
+    public function confirmBeekeeper_admin(
+        Beekeeper $beekeeper,
+        EntityManagerInterface $em
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // récupérer l'apiculteur et le valider
+        //$beekeeper = $beekeeper;
+        $beekeeper
+            ->setVerified(true);
+        $em->persist($beekeeper);
+        $em->flush();       
         return $this->render('admin/show.html.twig', [
             'beekeeper' => $beekeeper,
         ]);

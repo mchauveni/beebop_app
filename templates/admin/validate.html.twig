@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard Admin
+{% endblock %}
+
+{% block body %}
+
+	<a href="{{ path('admin_dashboard') }}">Retour</a>
+
+<section class="validate">
+<h1 class="validate_title"> Apiculteurs en attente </h1>
+	<div class="container p-4">
+		<a href="{{ path('app_logout') }}" class="btn btn-warning text-white fw-bold mb-3">Se deconnecter</a>            
+        <ul clas="validate_beekeepers">
+		{% for beekeeper in beekeepers %}
+				<li>{{beekeeper.login}},
+				    {{beekeeper.mail}} 
+				</li>
+				<a href="{{path('admin_beekeeper_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
+				<a href="{{path('app_beekeeper_delete', {'id': beekeeper.id }) }}">Supprimer</a>
+				<a href="{{path('admin_beekeeper_confirm', {'id': beekeeper.id }) }}">Valider</a>
+		{% endfor %}
+        </ul>
+	</div>
+</section>
+{% endblock %}

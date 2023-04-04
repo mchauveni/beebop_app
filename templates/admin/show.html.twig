@@ -4,19 +4,12 @@
 {% endblock %}
 
 {% block body %}
-
+<section class="adminBeekeeper">
+		<h1 class="adminBeekeeper_title">{{beekeeper.id}} - {{beekeeper.login}}</h1>
 	<div class="container p-4">
-		<a href="{{ path('admin_dashboard') }}" class="btn btn-warning text-white fw-bold mb-3">Retour à la liste</a>
-		<section class="admin">
-			<ul clas="admin_beekeepers">
-				<li>{{beekeeper.id}}</li>
-				<li>{{beekeeper.login}}</li>
-				<li>{{beekeeper.lastName}}</li>
-				<li>{{beekeeper.firstName}}</li>
-				<li>{{beekeeper.mail}}</li>
-				<li>{{beekeeper.apiaries | length}}</li>
-				<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
-			</ul>
-		</section>
+	<a href="{{ path('admin_dashboard') }}" class="btn btn-warning text-white fw-bold mb-3">Retour</a>
+    {{ include('admin/_show.html.twig') }}
+		<a href="{{ path('app_beekeeper_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
 	</div>
+</section>
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block title %}Admin - Apiculteurs en attente détails{% endblock %}
+{% block body %}
+<section class="adminAwait">
+		<h1 class="adminAwait__title">{{beekeeper.id}} - {{beekeeper.login}}</h1>
+	<div class="container p-4">
+	<a href="{{ path('admin_beekeeper_await_show') }}" class="btn btn-warning text-white fw-bold mb-3">Retour</a>
+    {{ include('admin/_show.html.twig') }}
+		<a href="{{ path('app_beekeeper_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
+	</div>
+</section>
+{% endblock %}
