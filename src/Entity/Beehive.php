@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\BeehiveRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,9 +19,20 @@ class Beehive
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: "Utiliser au moins {{ limit }} caractères",
+        maxMessage: "Ne pas dépasser {{ limit }} caractères"
+    )]
+
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(["noire", "caucasienne", "carnica", "italienne", "buckfast"])]
+
     private ?string $race = null;
 
     #[ORM\ManyToOne(inversedBy: 'beehives')]

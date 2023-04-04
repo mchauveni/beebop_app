@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beepop - Détail de votre rucher
+{% endblock %}
+
+{% block body %}
+	<section class="beehive">
+		<h1 class="beehive__title">Les ruches du rucher :
+			{{ apiary.name }}</h1>
+
+		<a href="{{ path('app_beehive_new', {'id': apiary.id}) }}" class="beehive__new">Nouvelle ruche</a>
+
+		<ul class="beehive__list">
+			{% for beehive in beehives %}
+				<li class="beehive__item">
+					<span>{{beehive.name}}</span>
+					<a href="{{ path('app_beehive_show', {'id': beehive.id}) }}" class="beehive__infos">Voir plus</a>
+					<a href="" class="beehive__tasks">Les tâches</a>
+				</li>
+			{% endfor %}
+		</ul>
+
+		<a href="{{ path('app_apiary_index') }}">Revenir aux ruchers</a>
+
+	</section>
+{% endblock %}

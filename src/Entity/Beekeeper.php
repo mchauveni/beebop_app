@@ -65,12 +65,13 @@ class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Assert\Regex(
         pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,48}$/',
-        match: false,
+        htmlPattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,48}$',
         message: 'Votre mot de passe doit contenir au minimum 1 caractère spécial, 1 chiffre, 1 majuscule et minuscule',
     )]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     #[Assert\Email(
         message: 'Le mail "{{ value }}" n\'est pas valide.',
     )]
@@ -95,6 +96,10 @@ class Beekeeper implements UserInterface, PasswordAuthenticatedUserInterface
         $this->apiaries = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->firstName;
+    }
     /**
      * @see UserInterface
      */
