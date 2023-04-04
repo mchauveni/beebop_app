@@ -4,36 +4,43 @@
 {% endblock %}
 
 {% block body %}
-		<a href="{{ path('app_beehive_by_apiary_show', {'id' : apiary.id}) }}">Retour aux ruches</a>
+	<a href="{{ path('app_beehive_by_apiary_show', {'id' : apiary.id}) }}">Retour aux ruches</a>
 	<section class="beehive">
-	<div>
-		<h1 class="beehive__title">{{beehive.name}}</h1>
-		<div class="beehive__change">
-		<a href="{{ path('app_beehive_delete', {'id': beehive.id}) }}">Supprimer</a>
-		<a href="{{ path('app_beehive_edit', {'id': beehive.id}) }}">Modifier</a>
-		</div>
+		<div>
+			<h1 class="beehive__title">{{beehive.name}}</h1>
+			<div class="beehive__change">
+				<a href="{{ path('app_beehive_delete', {'id': beehive.id}) }}">Supprimer</a>
+				<a href="{{ path('app_beehive_edit', {'id': beehive.id}) }}">Modifier</a>
+			</div>
 		</div>
 		<div class="beehive__apiary">
-		<p>
-		Du rucher : {{apiary.name}} situé au : {{apiary.localisation}}, {{apiary.zipCode}}
-		</p>
+			<p>
+				Du rucher :
+				{{apiary.name}}
+				situé au :
+				{{apiary.localisation}},
+				{{apiary.zipCode}}
+			</p>
 		</div>
-        <div class="beehive__race">
-        <p>La race des abeilles est : {{beehive.race}}</p>
-        </div>
+		<div class="beehive__race">
+			<p>La race des abeilles est :
+				{{beehive.race}}</p>
+		</div>
 		<div class="beehive__product">
-		<a href="">Voir vos récoltes</a>
+			<a href="">Voir vos récoltes</a>
 		</div>
 		<div class="beehive__history">
-		<span>Historique</span>
-		<ul class="beehive__historyItem">
-		<li class="beehive__historyItem">Récolte : 14/02</li>
-		<li class="beehive__historyItem">Récolte : 14/02</li>
-		<li class="beehive__historyItem">Nettoyage : 08/02</li>
-		</ul>
+			<span>Historique</span>
+			<ul class="beehive__historyItem">
+				{% for task in tasks %}
+					<li class="beehive__historyItem">{{task.type}}
+						:
+						{{task.doAt|date("d/m/Y")}}</li>
+				{% endfor %}
+			</ul>
+			<a href="{{ path('app_task_index', {'id': beehive.id}) }}">Ajouter une tache</a>
 		</div>
 
-		
 
 	</section>
 {% endblock %}

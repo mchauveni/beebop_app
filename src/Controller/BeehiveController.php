@@ -7,6 +7,7 @@ use App\Entity\Beehive;
 use App\Form\BeehiveType;
 use App\Repository\ApiaryRepository;
 use App\Repository\BeehiveRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,14 +44,22 @@ class BeehiveController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_beehive_show', methods: ['GET'])]
-    public function show(Beehive $beehive, ApiaryRepository $apiaryRepository): Response
+    public function show(Beehive $beehive, ApiaryRepository $apiaryRepository, TaskRepository $taskRepository): Response
     {
+        // dd($taskRepository->findBy([
+        //     'id_beehive' => $beehive->getId()
+        // ]));
+
+        $tasks = $taskRepository->findTasksByBeehiveId($beehive->getId());
+
         $apiary = $apiaryRepository->findBy([
             'id' => $beehive->getApiary()->getId()
         ]);
         return $this->render('beehive/show.html.twig', [
             'beehive' => $beehive,
-            'apiary' => $apiary[0]
+            'apiary' => $apiary[0],
+            'tasks' => $tasks
+
         ]);
     }
 
