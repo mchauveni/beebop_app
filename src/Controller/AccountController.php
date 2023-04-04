@@ -39,7 +39,7 @@ class AccountController extends AbstractController
             $beekeeper = $form->getData();
             $beekeeper
                 ->setRoles(['ROLE_BEEKEEPER'])
-                ->setVerified(true)
+                ->setVerified(false)
                 ->setPassword($this->passwordHasher->hashPassword($beekeeper, $form->get('password')->getData()));
 
             // enregistrer les données dans la base

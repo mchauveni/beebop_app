@@ -39,6 +39,7 @@ class BeehiveRepository extends ServiceEntityRepository
         }
     }
 
+
     //    /**
     //     * @return Beehive[] Returns an array of Beehive objects
     //     */
