@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -15,12 +16,20 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+
     private ?string $type = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Expression(
+        "this.getdoAt() <= this.getCurrentDate()",
+        message: 'La date ne peut pas être dans le futur.'
+    )]
+
     private ?\DateTimeImmutable $doAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
@@ -77,5 +86,9 @@ class Task
         $this->beehive = $beehive;
 
         return $this;
+    }
+    public function getCurrentDate()
+    {
+        return new \DateTimeImmutable();
     }
 }

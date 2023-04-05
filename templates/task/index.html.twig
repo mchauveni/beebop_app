@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beebop - Les tâches de la ruche
+{% endblock %}
+
+{% block body %}
+	<h1>Les tâches de la ruche :
+		{{ beehive.name }}</h1>
+	<a href="{{ path('app_beehive_show', {'id' : beehive.id}) }}">Retour à la ruche ruches</a>
+
+	<a href="{{ path('app_task_new', {'id' : beehive.id}) }}">Créer une nouvelle tache</a>
+
+	<ul>
+		{% for task in tasks %}
+			<li>
+				<span>{{ task.type }}</span>
+				<p>{{ task.description |u.truncate(100, '...') }}</p>
+				<span>{{ task.doAt ? task.doAt|date('d/m/Y')}}</span>
+				<div>
+					<a href="{{ path('app_task_delete', {'id': task.id}) }}">Supprimer
+					</a>
+					<a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
+				</div>
+			</li>
+
+		{% else %}
+			Pas de tâches actuellement !
+		{% endfor %}
+	</ul>
+{% endblock %}

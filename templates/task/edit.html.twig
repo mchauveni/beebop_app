@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beepop - Modifier une tâche
+{% endblock %}
+
+{% block body %}
+	<h1>Modifier une nouvelle tâche</h1>
+
+	{{ form_start(form) }}
+
+	<div class="form__wrapper">
+		{{ form_label( form.type ) }}
+		{{ form_errors( form.type ) }}
+		{{ form_widget( form.type,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+	</div>
+
+	<div class="form__wrapper">
+		{{ form_label( form.description ) }}
+		{{ form_errors( form.description ) }}
+		{{ form_widget( form.description ) }}
+	</div>
+
+	<div class="form__wrapper">
+		{{ form_label( form.doAt ) }}
+		{{ form_errors( form.doAt ) }}
+		{{ form_widget( form.doAt ) }}
+	</div>
+
+
+	{{ form_widget(form) }}
+
+	<div class="form__login">
+
+		<a href="{{ path('app_task_index', {'id' : taskId}) }}" class="form__link">Retour au rucher</a>
+		<button type="submit" class="form__btn">Valider</button>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}
