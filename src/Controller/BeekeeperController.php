@@ -22,10 +22,18 @@ class BeekeeperController extends AbstractController
     public function index(BeekeeperRepository $beekeeperRepository): Response
     {
         $beekeeper = $this->getUser();
-        
-        return $this->render('beekeeper/index.html.twig', [
-            'beekeeper' => $beekeeper,
-        ]);
+        $status = $beekeeper->isVerified();
+        //dd($status);
+        if($status){
+            return $this->render('beekeeper/index.html.twig', [
+                'beekeeper' => $beekeeper,
+            ]);
+        }else{
+            //$this->denyAccessUnlessGranted($status, false);
+            //throw $this->createAccessDeniedException('No access for you!');
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+
+        }
     }
 
     /*
@@ -34,7 +42,7 @@ class BeekeeperController extends AbstractController
 
     #[Route('/admin', name: 'admin_dashboard')]
     public function index_admin(
-        BeekeeperRepository $beekeeperRepository,
+        BeekeeperRepository $beekeeperRepository
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // récupérer tous les apiculteurs
@@ -47,26 +55,25 @@ class BeekeeperController extends AbstractController
 
     #[Route('/admin/{id}', name: 'admin_beekeeper_show')]
     public function showBeekeeper_admin(
+        Beekeeper $beekeeper
+    ): Response {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        return $this->render('admin/show.html.twig', [
+            'beekeeper' => $beekeeper,
+        ]);
+    }
+
+    #[Route('/admin/{id}/awaiting', name: 'admin_beekeeper_await_show')]
+    public function showBeekeeperAwait_admin(
         Beekeeper $beekeeper,
         ApiaryRepository $apiaryRepository,
         BeehiveRepository $beehiveRepository
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $apiaries = $apiaryRepository->findApiariesByBeekeeper($beekeeper->getId());
-        return $this->render('admin/show.html.twig', [
-            'beekeeper' => $beekeeper,
-            'apiaries' => $apiaries,
-        ]);
-    }
-
-    #[Route('/admin/{id}/awaiting', name: 'admin_beekeeper_await_show')]
-    public function showBeekeeperAwait_admin(
-        Beekeeper $beekeeper
-    ): Response {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $beekeeper = $beekeeper;
         return $this->render('admin/showAwait.html.twig', [
             'beekeeper' => $beekeeper,
+            'apiaries' => $apiaries,
         ]);
     }
 
@@ -97,6 +104,20 @@ class BeekeeperController extends AbstractController
         return $this->render('admin/show.html.twig', [
             'beekeeper' => $beekeeper,
         ]);
+    }
+
+    #[Route('/{id}/deleteAdmin', name: 'admin_beekeeper_delete')]
+    public function deleteBeekeeper_admin(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
+    {
+        $beekeeperRepository->remove($beekeeper, true);
+        return $this->redirectToRoute('admin_dashboard', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/deleteAdmin', name: 'admin_beekeeper_validate_delete')]
+    public function deleteAwaitingBeekeeper_admin(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
+    {
+        $beekeeperRepository->remove($beekeeper, true);
+        return $this->redirectToRoute('admin_validation', [], Response::HTTP_SEE_OTHER);
     }
 
     /*

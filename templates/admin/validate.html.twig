@@ -17,7 +17,7 @@
 				    {{beekeeper.mail}} 
 				</li>
 				<a href="{{path('admin_beekeeper_await_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
-				<a href="{{path('app_beekeeper_delete', {'id': beekeeper.id }) }}">Supprimer</a>
+				<a href="{{path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}">Supprimer</a>
 				<a href="{{path('admin_beekeeper_confirm', {'id': beekeeper.id }) }}">Valider</a>
 		{% endfor %}
         </ul>

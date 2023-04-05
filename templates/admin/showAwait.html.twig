@@ -17,7 +17,7 @@
 				{# just for dev bcs it's easier to see, to remove in prod #}
 				<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
 			</ul>
-		<a href="{{ path('app_beekeeper_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
+		<a href="{{ path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
 	</div>
 </section>
 {% endblock %}
