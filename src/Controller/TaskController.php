@@ -52,6 +52,7 @@ class TaskController extends AbstractController
         return $this->renderForm('task/new.html.twig', [
             'task' => $task,
             'form' => $form,
+            'idBeehive' => $id
         ]);
     }
 

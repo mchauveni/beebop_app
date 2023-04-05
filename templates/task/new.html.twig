@@ -22,13 +22,11 @@
 
 
 	{{ form_widget(form) }}
-	<div
-		class="form__login">
+	<div class="form__login">
 
-		{# <a href="{{ path('app_beehive_by_apiary_show', {'id' : idApiary}) }}" class="form__link">Retour au rucher</a> #}
+		<a href="{{ path('app_task_index', {'id' : idBeehive}) }}" class="form__link">Retour aux tâches</a>
 		<button type="submit" class="form__btn">Valider</button>
 	</div>
 	{{ form_end(form) }}
 
-	{# <a href="{{ path('app_task_index') }}">back to list</a> #}
 {% endblock %}

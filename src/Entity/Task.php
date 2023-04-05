@@ -25,6 +25,11 @@ class Task
 
     #[ORM\Column]
     #[Assert\NotBlank]
+    #[Assert\Expression(
+        "this.getdoAt() <= this.getCurrentDate()",
+        message: 'La date ne peut pas être dans le futur.'
+    )]
+
     private ?\DateTimeImmutable $doAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
@@ -81,5 +86,9 @@ class Task
         $this->beehive = $beehive;
 
         return $this;
+    }
+    public function getCurrentDate()
+    {
+        return new \DateTimeImmutable();
     }
 }
