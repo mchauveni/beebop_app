@@ -1,0 +1,14 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}
+Beebop - Page inaccessible
+{% endblock %}
+{% block body %}
+    <h1>Page non autorisée</h1>
+
+    <p>
+        Vous n'avez pas les autorisations nécessaires pour accéder à
+        cette page.
+        <a href="{{ path('app_login') }}">Retour à la page de connexion.</a>.
+    </p>
+{% endblock %}
