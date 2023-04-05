@@ -4,32 +4,44 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Repository\BeehiveRepository;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/product')]
 class ProductController extends AbstractController
 {
     #[Route('/{id}', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, int $id): Response
     {
         return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+            'products' => $productRepository->findProductsByBeehiveId($id),
+            'idBeehive' => $id
         ]);
     }
 
-    #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductRepository $productRepository): Response
-    {
+    #[Route('/{id}/new', name: 'app_product_new', methods: ['GET', 'POST'])]
+    public function new(
+        Request $request,
+        BeehiveRepository $beehiveRepository,
+        int $id,
+        EntityManagerInterface $em
+    ): Response {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
+            $beehive = $beehiveRepository->find($id);
+
+            $product->setBeehive($beehive);
+
+            $em->persist($product);
+            $em->flush();
 
             return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -37,14 +49,7 @@ class ProductController extends AbstractController
         return $this->renderForm('product/new.html.twig', [
             'product' => $product,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}/show', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
-    {
-        return $this->render('product/show.html.twig', [
-            'product' => $product,
+            'idBeehive' => $id
         ]);
     }
 

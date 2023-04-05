@@ -28,7 +28,6 @@ class TaskController extends AbstractController
     #[Route('/{id}/new', name: 'app_task_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        TaskRepository $taskRepository,
         int $id,
         BeehiveRepository $beehiveRepository,
         EntityManagerInterface $em

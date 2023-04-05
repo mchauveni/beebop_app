@@ -42,12 +42,12 @@ class ProductRepository extends ServiceEntityRepository
     public function findProductsByBeehiveId(int $beehiveId): array
     {
 
-        $qb = $this->createQueryBuilder('t');
+        $qb = $this->createQueryBuilder('p');
 
         $qb->select('p')
             ->join('p.beehive', 'b')
             ->where('b.id = :beehiveId')
-            ->orderBy('t.date', 'DESC')
+            ->orderBy('p.date', 'DESC')
             ->setParameter('beehiveId', $beehiveId);
 
         return $qb->getQuery()->getResult();
