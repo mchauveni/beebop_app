@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beebop - Votre production
+{% endblock %}
+
+{% block body %}
+	<h1>Votre production</h1>
+
+	{% for product in products %}
+
+		<p>Type de production :
+			{{ product.type }}
+		</p>
+		<span>{{ product.date ? product.date|date("d/m/Y") : '' }}</span>
+		<p>Quantité :
+			{{ product.quantity }}
+			kg</p>
+	</div>
+	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+</div>{% else %}
+
+<p>Pas de tâches !</p>{% endfor %}<div>
+<a href="{{ path('app_product_new', {'id': idBeehive}) }}">Ajouter une nouvelle production</a></div>{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Product
+{% endblock %}
+
+{% block body %}
+	<h1>Create new Product</h1>
+
+	{{ form_start(form) }}
+
+	<div class="form__wrapper">
+		{{ form_label( form.type ) }}
+		{{ form_errors( form.type ) }}
+		{{ form_widget( form.type,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+	</div>
+
+	<div class="form__wrapper">
+		{{ form_label( form.race ) }}
+		{{ form_errors( form.race ) }}
+		{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+	</div>
+
+
+	{{ form_widget(form) }}
+	<div class="form__login">
+
+		<a href="{{ path('app_task_index', {'id' : idBeehive}) }}" class="form__link">Retour à la ruche</a>
+		<button type="submit" class="form__btn">Valider</button>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}
