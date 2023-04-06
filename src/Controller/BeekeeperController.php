@@ -24,7 +24,6 @@ class BeekeeperController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $beekeeper = $this->getUser();
         $status = $beekeeper->isVerified();
-        //dd($status);
         if($status){
             return $this->render('beekeeper/index.html.twig', [
                 'beekeeper' => $beekeeper,
@@ -33,7 +32,6 @@ class BeekeeperController extends AbstractController
             //$this->denyAccessUnlessGranted($status, false);
             //throw $this->createAccessDeniedException('No access for you!');
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
-
         }
     }
 
@@ -126,27 +124,26 @@ class BeekeeperController extends AbstractController
     */
 
     #[Route('/{id}/edit', name: 'app_beekeeper_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
+    public function edit(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository, int $id): Response
     {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 
         $form = $this->createForm(BeekeeperType::class, $beekeeper);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $beekeeperRepository->save($beekeeper, true);
+            $idBeekeeper = $beekeeper->getId();
 
-            return $this->redirectToRoute('app_beekeeper_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_beekeeper_index', ['id'=>$idBeekeeper], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('beekeeper/edit.html.twig', [
             'beekeeper' => $beekeeper,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_beekeeper_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
+    #[Route('/{id}/show', name: 'app_beekeeper_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Beekeeper $beekeeper, int $id, BeekeeperRepository $beekeeperRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         

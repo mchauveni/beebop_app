@@ -1,33 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Modifier votre production{% endblock %}
+{% block title %}Beebop - Modifier votre production
+{% endblock %}
 
 {% block body %}
-    <h1>Modifier la production</h1>
 
-	{{ form_start(form) }}
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_product_index', {'id': idBeehive } ) }}" class="back">Retour</a>
+	<main>
+		<h2 class="subtitle">Modifier la production</h2>
 
-	<div class="form__wrapper">
-		{{ form_label( form.type ) }}
-		{{ form_errors( form.type ) }}
-		{{ form_widget( form.type ) }}
-	</div>
+		{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.quantity ) }}
-		{{ form_errors( form.quantity ) }}
-		{{ form_widget( form.quantity ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.type ) }}
+			{{ form_errors( form.type ) }}
+			{{ form_widget( form.type ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.date ) }}
-		{{ form_errors( form.date ) }}
-		{{ form_widget( form.date ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.date ) }}
+			{{ form_errors( form.date ) }}
+			{{ form_widget( form.date ) }}
+		</div>
+
+		<div class="form__wrapper f-column">
+			{{ form_label( form.quantity ) }}
+			{{ form_errors( form.quantity ) }}
+			{{ form_widget( form.quantity ) }}
+		</div>
 
 
-	{{ form_widget(form) }}
-    <a href="{{ path('app_product_index', {'id': idBeehive } ) }}">Retour aux productions</a>
-    <button type="submit" class="form__btn" formnovalidate>Modifier</button>
-    {#<a href="{{ path('app_product_delete', {'id': product.id } ) }}">Supprimer la production</a>#}
+		{{ form_widget(form) }}
+		<button type="submit" class="cta" formnovalidate>Modifier</button>
+	</main>
+	{#<a href="{{ path('app_product_delete', {'id': product.id } ) }}">Supprimer la production</a>#}
 {% endblock %}

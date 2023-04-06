@@ -21,7 +21,7 @@
 						<span>{{beehive.name}}</span>
 						<a href="{{ path('app_beehive_show', {'id': beehive.id}) }}" class="beehive__infos">Voir plus</a>
 					</div>
-					<a href="" class="cta beehive__tasks"><img src="./../assets/img/ico/add_task.svg"></a>
+					<a href="{{ path('app_task_index', {'id': beehive.id}) }}" class="cta beehive__tasks"><img src="./../assets/img/ico/add_task.svg"></a>
 				</li>
 			{% endfor %}
 		</ul>

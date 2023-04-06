@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Beebop - Votre production
+{% endblock %}
+
+{% block body %}
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_product_by_apiary_index', {'id':apiary}) }}" class="back">Retour</a>
+	<main class="apiaries">
+		<h2 class="subtitle">Suivi de production</h2>
+
+
+		<div class="apiaries__wrapper">
+
+			<a href="{{ path('app_product_new', {'id':beehive.id}) }}" class="cta list__add">Ajouter une production</a>
+				
+			<div class="chart">
+				<canvas id="production_chart"></canvas>
+			</div>
+
+			<div class="list__container f-column">
+				{% set miel = 0 %}
+				{% set pollen = 0 %}
+				{% set cire = 0 %}
+
+				{% for product in products %}
+					{% if product.type == "miel" %}
+						{% set miel = miel + product.quantity %}
+					{% endif %}
+		
+					{% if product.type == "pollen" %}
+						{% set pollen = pollen + product.quantity %}
+					{% endif %}
+		
+					{% if product.type == "cire" %}
+						{% set cire = cire + product.quantity %}
+					{% endif %}
+
+					<div class="list__item">
+						<ul>
+							<li>{{product.type}}</li>
+							<li>{{product.quantity}}</li>
+							<li>{{product.date|date('d/m/Y')}}</li>
+						</ul>
+						<a href="{{path('app_product_edit', {'id':product.id})}}">Modifier</a>
+						<a href="{{path('app_product_delete', {'id':product.id})}}">Supprimer</a>
+					</div>
+				{% else %}
+
+					<p class="apiaries__empty">Vous n'avez aucune productions  !</p>
+
+				{% endfor %}
+
+				{% block javascripts %}
+					<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				
+					<script>
+					  const ctx = document.getElementById('production_chart');
+				
+					  new Chart(ctx, {
+					    type: 'pie',
+					    data: {
+					      labels: ['Miel', 'Pollen', 'Cire'],
+					      datasets: [{
+					        label: 'Quantité',
+					        data: [{{miel}}, {{pollen}}, {{cire}}],
+							backgroundColor: [
+							  '#FEE12B',
+							  '#F1E9D9',
+							  '#F5D547'
+							],
+					        borderWidth: 0
+					      }]
+					    }});
+					</script>
+				{% endblock %}
+
+			</div>
+		</div>
+
+	</main>
+{% endblock %}

@@ -1,44 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Votre compte{% endblock %}
+{% block title %}Beebop - Votre compte
+{% endblock %}
 
 {% block body %}
-    <h1>Votre compte</h1>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Votre nom :</th>
-                <td>{{ beekeeper.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Votre prénom :</th>
-                <td>{{ beekeeper.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Identifiant : </th>
-                <td>{{ beekeeper.login }}</td>
-            </tr>
-            {# <tr>
-                <th>Mot de passe :</th>
-                <td>{{ beekeeper.password }}</td>
-            </tr> #}
-            <tr>
-                <th>Adresse mail : </th>
-                <td>{{ beekeeper.mail }}</td>
-            </tr>
-            <tr>
-                <th>Statut :</th>
-                <td>{{ beekeeper.verified ? 'Validé' : 'En attente/refusé' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-
-    <a href="{{ path('app_beekeeper_index') }}">Retour</a>
-
-    <a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}">Modifier</a>
-
-    {{ include('beekeeper/_delete_form.html.twig') }}
+	<main>
+		<div class="f-between">
+			<h2 class="subtitle" data-validate="{{beekeeper.verified}}">Votre compte</h2>
+			<a href="{{ path('app_beekeeper_edit', {'id': beekeeper.id}) }}" class='cta'>Modifier</a>
+		</div>
+		<table class="table">
+			<tbody class="account__container f-column glass">
+				<tr class="account__wrapper user">
+					<td>{{ beekeeper.lastName }}</td>
+					<td>{{ beekeeper.firstName }}</td>
+				</tr>
+				<tr class="account__wrapper passwd">
+					<td style="-webkit-text-security: disc !important">YourPassWord</td>
+					{# {{ beekeeper.password }} #}
+				</tr>
+				<tr class="account__wrapper mail">
+					<td>{{ beekeeper.mail }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="{{ path('app_beekeeper_index') }}" class='back'>Retour</a>
+		<div class='f-between'>
+			<a href="{{ path('app_logout') }}">Se déconnecter</a>
+			{{ include('beekeeper/_delete_form.html.twig') }}
+		</div>
+	</main>
 {% endblock %}

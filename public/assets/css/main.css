@@ -4,6 +4,9 @@
 @import url(./list.css);
 @import url(./log.css);
 @import url(./beehive.css);
+@import url(./beekeeper.css);
+@import url(./footer.css);
+@import url(./chart.css);
 
 @font-face {
     font-family: k2d;
@@ -119,8 +122,8 @@ h1 {
     font-family: k2d;
 }
 
-.cta.warning {
-    background: var(--warn)
+.warning {
+    background: var(--warn) !important;
 }
 
 .back {
@@ -151,33 +154,4 @@ h1 {
     height: 100%;
     transform-origin: center;
     transform: scale(0.8);
-}
-
-footer {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    background-color: var(--ligth);
-    width: 100vw;
-    height: 10vh;
-}
-
-footer nav {
-    display: flex;
-    justify-content: space-around;
-    height: 100%;
-}
-
-.footer__link {
-    height: 100%;
-}
-
-.footer__link__img {
-    transform: translateY(-25%);
-    height: 100%;
-    object-fit: contain;
-}
-
-.active {
-    transform: translateY(-35%);
 }

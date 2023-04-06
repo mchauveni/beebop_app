@@ -4,27 +4,34 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Les tâches de la ruche :
-		{{ beehive.name }}</h1>
-	<a href="{{ path('app_beehive_show', {'id' : beehive.id}) }}">Retour à la ruche {{ beehive.name }}</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main>
+		<h2 class="subtitle">Les tâches de la ruche :
+			{{ beehive.name }}</h2>
+		<a href="{{ path('app_beehive_show', {'id' : beehive.id}) }}" class="back">Retour</a>
 
-	<a href="{{ path('app_task_new', {'id' : beehive.id}) }}">Créer une nouvelle tache</a>
+		<a href="{{ path('app_task_new', {'id' : beehive.id}) }}" class="cta list__add">Créer une nouvelle tache</a>
 
-	<ul>
-		{% for task in tasks %}
-			<li>
-				<span>{{ task.type }}</span>
-				<p>{{ task.description |u.truncate(100, '...') }}</p>
-				<span>{{ task.doAt ? task.doAt|date('d/m/Y')}}</span>
-				<div>
-					<a href="{{ path('app_task_delete', {'id': task.id}) }}">Supprimer
-					</a>
-					<a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
-				</div>
-			</li>
+		<ul class="list__container f-column">
+			{% for task in tasks %}
+				<li class="list__item__wrapper f-between">
+					<div class="list__item f-column">
+						<span class="list__item__title">{{ task.type }}</span>
+						<p class="list__item__info">{{ task.description |u.truncate(100, '...') }}</p>
+						<span>{{ task.doAt ? task.doAt|date('d/m/Y')}}</span>
+					</div>
+					<div class="list__wrapper f-column f-center">
+						<a href="{{ path('app_task_edit', {'id': task.id}) }}" class="list__item">Modifier</a>
+						<a href="{{ path('app_task_delete', {'id': task.id}) }}" class="list__item warning">Supprimer
+						</a>
+					</div>
+				</li>
 
-		{% else %}
-			Pas de tâches actuellement !
-		{% endfor %}
-	</ul>
+			{% else %}
+				Pas de tâches actuellement !
+			{% endfor %}
+		</ul>
+	</main>
 {% endblock %}

@@ -1,24 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Votre production
+{% block title %}Beebop - Vos ruchers
 {% endblock %}
 
 {% block body %}
-	<h1>Votre production</h1>
-	<a href="{{ path('app_beehive_show', {'id' : beehive.id }) }}">Retour à la ruche {{ beehive.name }}</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_beekeeper_index') }}" class="back">Retour</a>
+	<main class="apiaries">
+		<h2 class="subtitle">Suivi de production</h2>
 
-	{% for product in products %}
+	{% if products is not empty %}
+		{% set miel = 0 %}
+		{% set pollen = 0 %}
+		{% set cire = 0 %}
 
-		<p>Type de production :
-			{{ product.type }}
-		</p>
-		<span>{{ product.date ? product.date|date("d/m/Y") : '' }}</span>
-		<p>Quantité :
-			{{ product.quantity|number_format(2, ',', ',') }} kg</p>
-	</div>
-	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-	<a href="{{ path('app_product_delete', {'id': product.id}) }}">Supprimer</a>
-</div>{% else %}
+		{% for product in products %}
+			{% if product.type == "miel" %}
+				{% set miel = miel + product.quantity %}
+			{% endif %}
 
-<p>Pas de production !</p>{% endfor %}<div>
-<a href="{{ path('app_product_new', {'id': beehive.id}) }}">Ajouter une nouvelle production</a></div>{% endblock %}
+			{% if product.type == "pollen" %}
+				{% set pollen = pollen + product.quantity %}
+			{% endif %}
+
+			{% if product.type == "cire" %}
+				{% set cire = cire + product.quantity %}
+			{% endif %}
+		{% endfor %}
+
+		<div class="chart">
+		  <canvas id="myChart"></canvas>
+		</div>
+
+		{% block javascripts %}
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+			<script>
+			  const ctx = document.getElementById('myChart');
+
+			  new Chart(ctx, {
+			    type: 'pie',
+			    data: {
+			      labels: ['Miel', 'Pollen', 'Cire'],
+			      datasets: [{
+			        label: 'Quantité',
+			        data: [{{miel}}, {{pollen}}, {{cire}}],
+					backgroundColor: [
+    				  '#FEE12B',
+    				  '#F1E9D9',
+    				  '#F5D547'
+    				],
+			        borderWidth: 0
+			      }]
+			    }});
+			</script>
+		{% endblock %}
+	{% else %}
+		<p>Pas de production !</p>
+	{% endif %}
+
+{% endblock %}
+
+
