@@ -4,36 +4,44 @@
 {% endblock %}
 
 {% block body %}
-		<a href="{{ path('app_beehive_by_apiary_show', {'id' : apiary.id}) }}">Retour aux ruches</a>
-	<section class="beehive">
-	<div>
-		<h1 class="beehive__title">{{beehive.name}}</h1>
-		<div class="beehive__change">
-		<a href="{{ path('app_beehive_delete', {'id': beehive.id}) }}">Supprimer</a>
-		<a href="{{ path('app_beehive_edit', {'id': beehive.id}) }}">Modifier</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_beehive_by_apiary_show', {'id' : apiary.id}) }}" class="back">Retour</a>
+	<main class="beehive f-column">
+		<div class="f-between">
+			<h2 class="subtitle">{{beehive.name}}</h2>
+			<div class="f-between" style='gap: 15px;'>
+				<a href="{{ path('app_beehive_delete', {'id': beehive.id}) }}" class="cta warning">Supprimer</a>
+				<a href="{{ path('app_beehive_edit', {'id': beehive.id}) }}" class="cta">Modifier</a>
+			</div>
 		</div>
+		<div class='beehive__container glass'>
+			<div class="beehive__apiary">
+				<p>
+					Situé au :
+					{{apiary.localisation}},
+					{{apiary.zipCode}}
+				</p>
+			</div>
+			<br/>
+			<div class="beehive__race">
+				<p>La race des abeilles est :
+					{{beehive.race}}</p>
+			</div>
 		</div>
-		<div class="beehive__apiary">
-		<p>
-		Du rucher : {{apiary.name}} situé au : {{apiary.localisation}}, {{apiary.zipCode}}
-		</p>
-		</div>
-        <div class="beehive__race">
-        <p>La race des abeilles est : {{beehive.race}}</p>
-        </div>
 		<div class="beehive__product">
-		<a href="">Voir vos récoltes</a>
+			<a href="">Voir vos récoltes</a>
 		</div>
-		<div class="beehive__history">
-		<span>Historique</span>
-		<ul class="beehive__historyItem">
-		<li class="beehive__historyItem">Récolte : 14/02</li>
-		<li class="beehive__historyItem">Récolte : 14/02</li>
-		<li class="beehive__historyItem">Nettoyage : 08/02</li>
-		</ul>
+		<div class="beehive__history f-column glass">
+			<h2>Historique</h2>
+			<ul class="beehive__historyWrapper f-column">
+				<li class="beehive__historyItem">Récolte : 14/02</li>
+				<li class="beehive__historyItem">Récolte : 14/02</li>
+				<li class="beehive__historyItem">Nettoyage : 08/02</li>
+			</ul>
 		</div>
 
-		
 
-	</section>
+	</main>
 {% endblock %}

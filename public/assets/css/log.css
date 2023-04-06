@@ -28,8 +28,13 @@ label {
     font-size: 0.8rem;
 }
 
-form[name="beehive"] {
+form:is([name="apiary"], [name="beehive"]) {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin: 15px auto;
+    border: solid 2px var(--grey);
+    background: linear-gradient(134.25deg, rgba(255, 253, 253, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
 }

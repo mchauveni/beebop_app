@@ -4,23 +4,29 @@
 {% endblock %}
 
 {% block body %}
-	<section class="beehive">
-		<h1 class="beehive__title">Les ruches du rucher :
-			{{ apiary.name }}</h1>
 
-		<a href="{{ path('app_beehive_new', {'id': apiary.id}) }}" class="beehive__new">Nouvelle ruche</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main class="beehive">
+		<h2 class="beehive__title subtitle">Les ruches du rucher :
+			{{ apiary.name }}</h2>
 
-		<ul class="beehive__list">
+		<a href="{{ path('app_beehive_new', {'id': apiary.id}) }}" class="list__add cta more">Nouvelle ruche</a>
+
+		<ul class="list__container f-column">
 			{% for beehive in beehives %}
-				<li class="beehive__item">
-					<span>{{beehive.name}}</span>
-					<a href="{{ path('app_beehive_show', {'id': beehive.id}) }}" class="beehive__infos">Voir plus</a>
-					<a href="" class="beehive__tasks">Les tâches</a>
+				<li class="list__item__wrapper f-between">
+					<div class="list__item f-between">
+						<span>{{beehive.name}}</span>
+						<a href="{{ path('app_beehive_show', {'id': beehive.id}) }}" class="beehive__infos">Voir plus</a>
+					</div>
+					<a href="" class="cta beehive__tasks"><img src="./../assets/img/ico/add_task.svg"></a>
 				</li>
 			{% endfor %}
 		</ul>
 
-		<a href="{{ path('app_apiary_index') }}">Revenir aux ruchers</a>
+		<a href="{{ path('app_apiary_index') }}" class="back f-center">retour</a>
 
-	</section>
+	</main>
 {% endblock %}

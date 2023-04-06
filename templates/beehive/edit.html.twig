@@ -1,32 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Modifier votre ruche{% endblock %}
+{% block title %}Beebop - Modifier votre ruche
+{% endblock %}
 
 {% block body %}
-<main>
-   <h1>Modifier votre ruche</h1>
+	<main>
 
-	{{ form_start(form) }}
+		<header class="header">
+			<h1 class="header__name">Beebop</h1>
+		</header>
+		<h2 class="subtitle">Modifier votre ruche</h2>
 
-	<div class="form__wrapper">
-		{{ form_label( form.name) }}
-		{{ form_errors( form.name ) }}
-		{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
-	</div>
+		{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.race ) }}
-		{{ form_errors( form.race ) }}
-		{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.name) }}
+			{{ form_errors( form.name ) }}
+			{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+		</div>
 
-	{{ form_widget(form) }}
-	<div class="form__login">
-		<a href="{{ path('app_beehive_show', {'id' : beehive.id}) }}" class="form__link">Retour à votre ruche</a>
-		<button type="submit" class="form__btn" formnovalidate>Valider</button>
-	</div>
-	{{ form_end(form) }}
+		<div class="form__wrapper f-column">
+			{{ form_label( form.race ) }}
+			{{ form_errors( form.race ) }}
+			{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+		</div>
+
+		{{ form_widget(form) }}
+		<div class="form__login f-between">
+			<a href="{{ path('app_beehive_show', {'id' : beehive.id}) }}" class="form__link">Retour à votre ruche</a>
+			<button type="submit" class="cta">Valider</button>
+		</div>
+		{{ form_end(form) }}
 
 
-    </main>
+	</main>
 {% endblock %}

@@ -1,0 +1,56 @@
+.beehive {
+    gap: 30px;
+}
+
+.beehive__container {
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.beehive__apiary {
+    display: flex;
+}
+
+.beehive__apiary::before {
+    content: "";
+    display: block;
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+    background-image: url('./../img/ico/beehive.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.beehive__race {
+    display: flex;
+}
+
+.beehive__race::before {
+    content: "";
+    display: block;
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+    background-image: url('./../img/ico/bee.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.beehive__history {
+    gap: 20px;
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.beehive__historyWrapper {
+    gap: 20px;
+}
+
+.beehive__historyItem {
+    padding-bottom: 5px;
+    border-bottom: solid 2px #fff;
+
+}

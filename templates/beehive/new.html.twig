@@ -4,29 +4,34 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Créer une nouvelle ruche</h1>
 
-	{{ form_start(form) }}
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main>
+		<h2 class="subtitle">Créer une nouvelle ruche</h2>
 
-	<div class="form__wrapper f-column">
-		{{ form_label( form.name ) }}
-		{{ form_errors( form.name ) }}
-		{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
-	</div>
+		{{ form_start(form, {'attr': {'class': 'glass'}}) }}
 
-	<div class="form__wrapper f-column">
-		{{ form_label( form.race ) }}
-		{{ form_errors( form.race ) }}
-		{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.name ) }}
+			{{ form_errors( form.name ) }}
+			{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+		</div>
+
+		<div class="form__wrapper f-column">
+			{{ form_label( form.race ) }}
+			{{ form_errors( form.race ) }}
+			{{ form_widget( form.race,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+		</div>
 
 
-	{{ form_widget(form) }}
-	<div class="form__login f-column">
+		{{ form_widget(form) }}
+		<div class="form__login f-between f-center">
 
-		<a href="{{ path('app_beehive_by_apiary_show', {'id' : idApiary}) }}" class="form__link">Retour au rucher</a>
-		<button type="submit" class="cta">Valider</button>
-	</div>
-	{{ form_end(form) }}
-
+			<a href="{{ path('app_beehive_by_apiary_show', {'id' : idApiary}) }}" class="form__link">Retour au rucher</a>
+			<button type="submit" class="cta">Valider</button>
+		</div>
+		{{ form_end(form) }}
+	</main>
 {% endblock %}
