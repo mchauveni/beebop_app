@@ -28,7 +28,7 @@ label {
     font-size: 0.8rem;
 }
 
-form:is([name="apiary"], [name="beehive"]) {
+form:is([name="apiary"], [name="beehive"], [name="beekeeper"], [name="task"], [name="product"]) {
     display: flex;
     flex-direction: column;
     width: 100%;

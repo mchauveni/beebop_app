@@ -37,6 +37,7 @@
     background: var(--yellow);
     border-radius: 10px;
     padding: 10px 15px;
+    gap: 15px;
     border: none;
 }
 

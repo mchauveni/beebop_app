@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Votre production
+{% block title %}Beebop - Vos ruchers
 {% endblock %}
 
 {% block body %}
-	<h1>Votre production</h1>
-	<a href="{{ path('app_beehive_show', {'id' : beehive.id }) }}">Retour à la ruche {{ beehive.name }}</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_beekeeper_index') }}" class="back">Retour</a>
+	<main class="apiaries">
+		<h2 class="subtitle">Suivi de production</h2>
 
 	{% if products is not empty %}
 		{% set miel = 0 %}
