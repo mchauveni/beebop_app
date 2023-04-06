@@ -21,16 +21,16 @@
 				{% set miel = miel + product.quantity %}
 			{% endif %}
 
-			{% if product.type == "cire" %}
+			{% if product.type == "pollen" %}
 				{% set pollen = pollen + product.quantity %}
 			{% endif %}
 
-			{% if product.type == "pollen" %}
+			{% if product.type == "cire" %}
 				{% set cire = cire + product.quantity %}
 			{% endif %}
 		{% endfor %}
 
-		<div>
+		<div class="chart">
 		  <canvas id="myChart"></canvas>
 		</div>
 
@@ -60,9 +60,7 @@
 	{% else %}
 		<p>Pas de production !</p>
 	{% endif %}
-	<div>
-		<a href="{{ path('app_product_new', {'id': beehive.id}) }}">Ajouter une nouvelle production</a>
-	</div>
+
 {% endblock %}
 
 
