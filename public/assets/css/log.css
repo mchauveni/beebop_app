@@ -7,9 +7,10 @@ form {
 
 label {
     width: 100%;
+    text-align: start;
 }
 
-.form__input {
+:is(.form__input, .form__wrapper input, .form__wrapper select) {
     width: 100%;
     background: var(--dark);
     border: solid 1px var(--grey);
@@ -19,9 +20,21 @@ label {
 }
 
 .form__wrapper {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     gap: 15px;
     text-align: center;
     font-size: 0.8rem;
+}
+
+form:is([name="apiary"], [name="beehive"]) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 15px auto;
+    border: solid 2px var(--grey);
+    background: linear-gradient(134.25deg, rgba(255, 253, 253, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
 }

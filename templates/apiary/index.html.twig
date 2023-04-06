@@ -4,27 +4,34 @@
 {% endblock %}
 
 {% block body %}
-	<section class="apiaries">
-		<h1 class="apiaries__title">Vos ruchers</h1>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main class="apiaries">
+		<h2 class="subtitle">Vos ruchers</h2>
 
-		<div class="apiaries__btn">
+		<div class="list__add cta more">
 			<a href="{{ path('app_apiary_new') }}">Ajouter un nouveau rucher</a>
 		</div>
 
 
 		<div class="apiaries__wrapper">
-			<ul class="apiaries__list">
+			<div class="list__container f-column">
 				{% for apiary in apiaries %}
-					<li>
-						<span class="apiaries__name">{{ apiary.name }}</span>
-						<p class="apiaries__address">{{ apiary.localisation }},
-							{{ apiary.zipCode }}</p>
-						<p class="apiaries__beehives">{{  apiary.beehives | length }}</p>
+					<div class="list__item__component f-column">
+						<div class="list__item f-column">
+							<span class="list__item__title">{{ apiary.name }}</span>
+							<p class="list__item__info list__loc">{{ apiary.localisation }},
+								{{ apiary.zipCode }}</p>
+							<p class="list__item__info list__quantity">{{  apiary.beehives | length }}</p>
 
-						<a href="{{ path('app_apiary_delete', {'id': apiary.id}) }}" class="apiries__link">Supprimer</a>
-						<a href="{{ path('app_apiary_edit', {'id': apiary.id}) }}">Modifier</a>
-						<a href="{{ path('app_beehive_by_apiary_show', {'id': apiary.id}) }}">Voir plus</a>
-					</li>
+						</div>
+						<div class="list__item list__item__menu f-column close">
+							<a href="{{ path('app_apiary_delete', {'id': apiary.id}) }}" class="apiries__link">Supprimer</a>
+							<a href="{{ path('app_apiary_edit', {'id': apiary.id}) }}">Modifier</a>
+							<a href="{{ path('app_beehive_by_apiary_show', {'id': apiary.id}) }}">Voir plus</a>
+						</div>
+					</div>
 				{% else %}
 
 					<p class="apiaries__empty">Vous n'avez aucun ruchers !</p>
@@ -32,8 +39,8 @@
 				{% endfor %}
 
 
-			</ul>
+			</div>
 		</div>
 
-	</section>
+	</main>
 {% endblock %}
