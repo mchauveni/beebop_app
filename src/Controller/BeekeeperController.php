@@ -142,10 +142,10 @@ class BeekeeperController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_beekeeper_show', methods: ['GET', 'POST'])]
-    public function show(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
+    #[Route('/{id}/show', name: 'app_beekeeper_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Beekeeper $beekeeper, int $id, BeekeeperRepository $beekeeperRepository): Response
     {
-        $beekeeper = $this->getUser();
+        $beekeeper = $beekeeperRepository->find($id);
         return $this->render('beekeeper/show.html.twig', [
             'beekeeper' => $beekeeper,
         ]);
