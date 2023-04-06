@@ -28,8 +28,8 @@ class ProductController extends AbstractController
     #[Route('/{id}/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        BeehiveRepository $beehiveRepository,
         int $id,
+        BeehiveRepository $beehiveRepository,
         EntityManagerInterface $em
     ): Response {
         $product = new Product();

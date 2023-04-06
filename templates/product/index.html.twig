@@ -14,7 +14,7 @@
 		</p>
 		<span>{{ product.date ? product.date|date("d/m/Y") : '' }}</span>
 		<p>Quantité :
-			{{ product.quantity|number_format(2, ' ', ',') }} kg</p>
+			{{ product.quantity|number_format(2, ',', ',') }} kg</p>
 	</div>
 	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
 	<a href="{{ path('app_product_delete', {'id': product.id}) }}">Supprimer</a>

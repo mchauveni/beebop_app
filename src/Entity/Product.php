@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -84,5 +85,9 @@ class Product
         $this->beehive = $beehive;
 
         return $this;
+    }
+    public function getCurrentDate()
+    {
+        return new \DateTimeImmutable();
     }
 }
