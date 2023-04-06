@@ -7,6 +7,7 @@ use App\Form\TaskType;
 use App\Entity\Beehive;
 use App\Repository\TaskRepository;
 use App\Repository\BeehiveRepository;
+use App\Repository\ApiaryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TaskController extends AbstractController
 {
     #[Route('/{id}/showAll', name: 'app_task_index', methods: ['GET'])]
-    public function index(TaskRepository $taskRepository, BeehiveRepository $beehiveRepository, int $id): Response
+    public function index(TaskRepository $taskRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response
     {
+        $beehive =  $beehiveRepository->find($id);
+        //dd($apiaryRepository->findBy([], ['beehives' => $beehive]));
         return $this->render('task/index.html.twig', [
             'tasks' => $taskRepository->findTasksByBeehiveId($id),
             "beehive" => $beehiveRepository->find($id),

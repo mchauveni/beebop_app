@@ -4,6 +4,8 @@
 @import url(./list.css);
 @import url(./log.css);
 @import url(./beehive.css);
+@import url(./beekeeper.css);
+@import url(./footer.css);
 
 @font-face {
     font-family: k2d;
@@ -119,8 +121,8 @@ h1 {
     font-family: k2d;
 }
 
-.cta.warning {
-    background: var(--warn)
+.warning {
+    background: var(--warn) !important;
 }
 
 .back {

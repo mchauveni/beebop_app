@@ -1,32 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Vos ruchers
+{% block title %}Beebop - Votre production
 {% endblock %}
 
 {% block body %}
 	<header class="header">
 		<h1 class="header__name">Beebop</h1>
 	</header>
-	<a href="{{ path('app_beekeeper_index') }}" class="back">Retour</a>
+	<a href="{{ path('app_product_index', {'id':beekeeper}) }}" class="back">Retour</a>
 	<main class="apiaries">
 		<h2 class="subtitle">Suivi de production</h2>
 
 
 		<div class="apiaries__wrapper">
 			<div class="list__container f-column">
-				{% for apiary in apiaries %}
-					<a href="{{ path('app_product_by_apiary_index', {'id': apiary.id}) }}">
+				{% for beehive in beehives %}
+					<a href="{{ path('app_product_by_beehive_show', {'id': beehive.id}) }}">
 						<div class="list__item__component f-column">
 							<div class="list__item f-column">
-								<span class="list__item__title">{{ apiary.name }}</span>
-								<p class="list__item__info list__quantity">{{  apiary.beehives | length }}</p>
+								<span class="list__item__title">{{ beehive.name }}</span>
 
 							</div>
 						</div>
 					</a>
 				{% else %}
 
-					<p class="apiaries__empty">Vous n'avez aucun ruchers !</p>
+					<p class="apiaries__empty">Vous n'avez aucunes ruches  !</p>
 
 				{% endfor %}
 

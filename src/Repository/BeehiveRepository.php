@@ -39,6 +39,21 @@ class BeehiveRepository extends ServiceEntityRepository
         }
     }
 
+        /**
+     * Retourne les informations sur les ruchers associés à l'apiculteur
+     * @return Beehive[]
+     */
+    public function findBeehivesByApiary(int $idApiary)
+    {
+        $qb = $this->createQueryBuilder('b');
+        $qb
+            ->select('b')
+            ->join('b.apiary', 'a')
+            ->where('a.id = :idApiary')
+            ->setParameter('idApiary', $idApiary);
+        return $qb->getQuery()->getResult();
+    }
+
 
     //    /**
     //     * @return Beehive[] Returns an array of Beehive objects

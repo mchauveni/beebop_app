@@ -1,47 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Modifier votre compte{% endblock %}
+{% block title %}Beebop - Modifier votre compte
+{% endblock %}
 
 {% block body %}
-    <h1 class="form__title">Modifier votre compte</h1>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_beekeeper_index') }}" class="back">Retour</a>
+	<main>
+		<h2 class="subtitle">Modifier votre compte</h2>
 
-	{{ form_start(form) }}
+		{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.name ) }}
-		{{ form_errors( form.name ) }}
-		{{ form_widget( form.name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.first_name ) }}
+			{{ form_errors( form.first_name ) }}
+			{{ form_widget( form.first_name,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.lastName ) }}
-		{{ form_errors( form.lastName ) }}
-		{{ form_widget( form.lastName,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.last_name ) }}
+			{{ form_errors( form.last_name ) }}
+			{{ form_widget( form.last_name,  { 'attr' : { 'min': 3, 'max': 255 } } ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.login ) }}
-		{{ form_errors( form.login ) }}
-		{{ form_widget( form.login ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.login ) }}
+			{{ form_errors( form.login ) }}
+			{{ form_widget( form.login ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.mail ) }}
-		{{ form_errors( form.mail ) }}
-		{{ form_widget( form.mail ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.mail ) }}
+			{{ form_errors( form.mail ) }}
+			{{ form_widget( form.mail ) }}
+		</div>
 
-	<div class="form__wrapper">
-	{% for field in form.password %}
-		{{ form_label( field ) }}
-		{{ form_errors( field ) }}
-		{{ form_widget( field,  { 'attr' : { 'min': 8, 'max': 48 } } ) }}
-	{% endfor %}
-	</div>
+		<div class="form__wrapper f-column">
+			{% for field in form.password %}
+				{{ form_label( field ) }}
+				{{ form_errors( field ) }}
+				{{ form_widget( field,  { 'attr' : { 'min': 8, 'max': 48 } } ) }}
+			{% endfor %}
+		</div>
 
-	{{ form_widget(form) }}
-    <a href="{{ path('app_beekeeper_index') }}" class="form__link">Retour à l'acceuil</a>
-	<button type="submit" class="form__btn" formnovalidate>Valider</button>
+		{{ form_widget(form) }}
+		<button type="submit" class="cta" formnovalidate>Valider</button>
 
-    {{ include('beekeeper/_delete_form.html.twig') }}
+		{{ include('beekeeper/_delete_form.html.twig') }}
+	</main>
 {% endblock %}

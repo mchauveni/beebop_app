@@ -1,0 +1,51 @@
+table {
+    width: 100%;
+}
+
+.account__container {
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    border-radius: 15px;
+}
+
+.account__wrapper {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: solid 2px;
+}
+
+.account__wrapper td {
+    display: flex;
+    align-items: center;
+}
+
+.account__wrapper::before {
+    content: "";
+    display: block;
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.account__wrapper.user::before {
+    background-image: url(./../img/ico/user_white.svg)
+}
+
+.account__wrapper.passwd {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.account__wrapper.passwd::before {
+    background-image: url(./../img/ico/key.svg);
+}
+
+.account__wrapper.mail::before {
+    background-image: url(./../img/ico/@.svg);
+}

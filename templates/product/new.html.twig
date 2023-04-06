@@ -4,29 +4,33 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Enregistrer une nouvelle production</h1>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main>
+		<h2 class="subtitle">Enregistrer une nouvelle production</h2>
 
-	{{ form_start(form) }}
+		{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.type ) }}
-		{{ form_errors( form.type ) }}
-		{{ form_widget( form.type ) }}
-	</div>
-	
-	<div class="form__wrapper">
-		{{ form_label( form.quantity ) }}
-		{{ form_errors( form.quantity ) }}
-		{{ form_widget( form.quantity ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.type ) }}
+			{{ form_errors( form.type ) }}
+			{{ form_widget( form.type ) }}
+		</div>
+
+		<div class="form__wrapper f-column">
+			{{ form_label( form.quantity ) }}
+			{{ form_errors( form.quantity ) }}
+			{{ form_widget( form.quantity ) }}
+		</div>
 
 
-	{{ form_widget(form) }}
-	<div class="form__login">
+		{{ form_widget(form) }}
+		<div class="form__login">
 
-		<a href="{{ path('app_product_index', {'id' : idBeehive}) }}" class="form__link">Retour aux productions</a>
-		<button type="submit" class="form__btn" formnovalidate>Valider</button>
-	</div>
-	{{ form_end(form) }}
-
+			<a href="{{ path('app_product_index', {'id' : idBeehive}) }}" class="form__link">Retour aux productions</a>
+			<button type="submit" class="cta" formnovalidate>Valider</button>
+		</div>
+		{{ form_end(form) }}
+	</main>
 {% endblock %}

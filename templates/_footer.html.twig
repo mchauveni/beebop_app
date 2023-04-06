@@ -1,0 +1,13 @@
+<footer>
+	<nav class="">
+		<a href="{{ path('app_apiary_index')}}">
+			<div class="nav_item nav__beehive"></div>
+		</a>
+		<a href="{{ path('app_product_index', {'id': app.user.id}) }}">
+			<div class="nav_item nav__prod"></div>
+		</a>
+		<a href="{{ path('app_beekeeper_show', {'id': app.user.id} ) }}">
+			<div class="nav_item nav__account"></div>
+		</a>
+	</nav>
+</footer>

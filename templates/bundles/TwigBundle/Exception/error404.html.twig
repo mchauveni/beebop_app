@@ -1,14 +1,12 @@
 {# templates/bundles/TwigBundle/Exception/error404.html.twig #}
 {% extends 'base.html.twig' %}
 {% block title %}
-Beebop - Page inexistante
+	Beebop - Page inexistante
 {% endblock %}
 {% block body %}
-    <h1>Erreur 404 - Page inexistante</h1>
-
-    <p>
-        La page que vous avez demandé n'existe pas, vérifiez si vous
-        n'avez pas fait de fautes dans l'URL.
-        <a href="{{ path('app_login') }}">Retour à la page de connexion.</a>.
-    </p>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<h2 class="subtitle">Erreur 404 - Page inexistante</h2>
+	<img src="./assets/img/ico/icon.svg" alt="beebop icone">
 {% endblock %}
