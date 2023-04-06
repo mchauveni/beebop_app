@@ -18,6 +18,8 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_index', methods: ['GET', 'POST'])]
     public function index(ProductRepository $productRepository, BeehiveRepository $beehiveRepository,int $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $beehive = $beehiveRepository->find($id);
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findProductsByBeehiveId($id),
@@ -32,6 +34,7 @@ class ProductController extends AbstractController
         BeehiveRepository $beehiveRepository,
         EntityManagerInterface $em
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
@@ -54,6 +57,8 @@ class ProductController extends AbstractController
     public function edit(Request $request, Product $product, ProductRepository $productRepository, 
     int $id, BeehiveRepository $beehiveRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
         $idBeehive = $product->getBeehive()->getId();
@@ -72,6 +77,8 @@ class ProductController extends AbstractController
     #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $idBeehive = $product->getBeehive()->getId();
         $productRepository->remove($product, true);
         return $this->redirectToRoute('app_product_index', ['id'=>$idBeehive], Response::HTTP_SEE_OTHER);

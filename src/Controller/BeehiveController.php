@@ -20,6 +20,7 @@ class BeehiveController extends AbstractController
     #[Route('/{id}/new', name: 'app_beehive_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApiaryRepository $apiaryRepository, $id, EntityManagerInterface $em): Response
     {
+        $user = $this->getUser()->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $idApiary = $id;
         $beehive = new Beehive();
         $form = $this->createForm(BeehiveType::class, $beehive);
@@ -46,6 +47,8 @@ class BeehiveController extends AbstractController
     #[Route('/{id}', name: 'app_beehive_show', methods: ['GET'])]
     public function show(Beehive $beehive, ApiaryRepository $apiaryRepository, TaskRepository $taskRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $tasks = $taskRepository->findTasksByBeehiveId($beehive->getId());
 
         $apiary = $apiaryRepository->findBy([
@@ -62,6 +65,8 @@ class BeehiveController extends AbstractController
     #[Route('/{id}/edit', name: 'app_beehive_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Beehive $beehive, BeehiveRepository $beehiveRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $form = $this->createForm(BeehiveType::class, $beehive);
         $form->handleRequest($request);
 
@@ -81,6 +86,8 @@ class BeehiveController extends AbstractController
     #[Route('/{id}/delete', name: 'app_beehive_delete', methods: ['GET'])]
     public function delete(Beehive $beehive, BeehiveRepository $beehiveRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $idApiary = $beehive->getApiary()->getId();
         $beehiveRepository->remove($beehive, true);
 

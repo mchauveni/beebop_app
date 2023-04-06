@@ -25,14 +25,17 @@ class ProductType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'label' => 'Type de produits récoltés : ',
+                'required' => true
             ])
             ->add('quantity', NumberType::class,[
                 'scale' => 2,
-                'label' => 'Quantité du produit (en kg) :'
+                'label' => 'Quantité du produit (en kg) :',
+                'required' => true
             ])
             ->add('date', DateType::class, [
                 'input' => 'datetime_immutable', 'widget' => 'single_text',
-                'label' => 'Date de la collecte :'
+                'label' => 'Date de la collecte :',
+                'required' => true
             ])
         ;
     }

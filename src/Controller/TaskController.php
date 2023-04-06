@@ -19,6 +19,8 @@ class TaskController extends AbstractController
     #[Route('/{id}/showAll', name: 'app_task_index', methods: ['GET'])]
     public function index(TaskRepository $taskRepository, BeehiveRepository $beehiveRepository, int $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         return $this->render('task/index.html.twig', [
             'tasks' => $taskRepository->findTasksByBeehiveId($id),
             "beehive" => $beehiveRepository->find($id),
@@ -32,6 +34,8 @@ class TaskController extends AbstractController
         BeehiveRepository $beehiveRepository,
         EntityManagerInterface $em
     ): Response {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
@@ -58,6 +62,7 @@ class TaskController extends AbstractController
     #[Route('/{id}/edit', name: 'app_task_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Task $task, TaskRepository $taskRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 
         $idBeehive = $task->getBeehive()->getId();
 
@@ -80,6 +85,7 @@ class TaskController extends AbstractController
     #[Route('/{id}/delete', name: 'app_task_delete', methods: ['GET'])]
     public function delete(Task $task, TaskRepository $taskRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 
         $idBeehive = $task->getBeehive()->getId();
         $taskRepository->remove($task, true);

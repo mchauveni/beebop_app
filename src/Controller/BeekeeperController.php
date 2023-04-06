@@ -21,6 +21,7 @@ class BeekeeperController extends AbstractController
     #[Route('/', name: 'app_beekeeper_index', methods: ['GET'])]
     public function index(BeekeeperRepository $beekeeperRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $beekeeper = $this->getUser();
         $status = $beekeeper->isVerified();
         //dd($status);
@@ -127,6 +128,8 @@ class BeekeeperController extends AbstractController
     #[Route('/{id}/edit', name: 'app_beekeeper_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+
         $form = $this->createForm(BeekeeperType::class, $beekeeper);
         $form->handleRequest($request);
 
@@ -145,6 +148,8 @@ class BeekeeperController extends AbstractController
     #[Route('/{id}', name: 'app_beekeeper_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
+        
         $beekeeper = $this->getUser();
         return $this->render('beekeeper/show.html.twig', [
             'beekeeper' => $beekeeper,
@@ -154,6 +159,7 @@ class BeekeeperController extends AbstractController
     #[Route('/{id}/delete', name: 'app_beekeeper_delete', methods: ['POST'])]
     public function delete(Request $request, Beekeeper $beekeeper, BeekeeperRepository $beekeeperRepository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         if ($this->isCsrfTokenValid('delete' . $beekeeper->getId(), $request->request->get('_token'))) {
             $beekeeperRepository->remove($beekeeper, true);
         }
