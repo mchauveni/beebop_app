@@ -30,9 +30,9 @@
 	{{ form_widget(form) }}
 
 	<div class="form__login">
-
-		<a href="{{ path('app_task_index', {'id' : taskId}) }}" class="form__link">Retour au rucher</a>
-		<button type="submit" class="form__btn">Valider</button>
+		<a href="{{ path('app_task_index', {'id' : id}) }}" class="form__link">Retour aux tâches</a>
+		{# <a href="{{ path('app_task_index', {'id' : taskId}) }}" class="form__link">Retour au rucher</a>
+ #}		<button type="submit" class="form__btn">Valider</button>
 	</div>
 	{{ form_end(form) }}
 

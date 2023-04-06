@@ -73,6 +73,7 @@ class TaskController extends AbstractController
         return $this->renderForm('task/edit.html.twig', [
             'taskId' => $task->getBeehive()->getId(),
             'form' => $form,
+            'id' => $idBeehive
         ]);
     }
 

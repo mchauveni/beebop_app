@@ -15,13 +15,20 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $type = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Expression(
+        "this.getDate() <= this.getCurrentDate()",
+        message: 'La date ne peut pas être dans le futur.'
+    )]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    #[Assert\NotBlank]
+    private ?float $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Beehive $beehive = null;
@@ -55,12 +62,12 @@ class Product
         return $this;
     }
 
-    public function getQuantity(): ?int
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self
+    public function setQuantity(float $quantity): self
     {
         $this->quantity = $quantity;
 

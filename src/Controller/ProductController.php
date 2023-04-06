@@ -15,12 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/{id}', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository, int $id): Response
+    #[Route('/{id}', name: 'app_product_index', methods: ['GET', 'POST'])]
+    public function index(ProductRepository $productRepository, BeehiveRepository $beehiveRepository,int $id): Response
     {
+        $beehive = $beehiveRepository->find($id);
         return $this->render('product/index.html.twig', [
             'products' => $productRepository->findProductsByBeehiveId($id),
-            'idBeehive' => $id
+            'beehive' => $beehive
         ]);
     }
 
@@ -34,18 +35,14 @@ class ProductController extends AbstractController
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $beehive = $beehiveRepository->find($id);
-
-            $product->setBeehive($beehive);
-
+            $product
+                ->setBeehive($beehiveRepository->find($id));
             $em->persist($product);
             $em->flush();
 
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_index', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('product/new.html.twig', [
             'product' => $product,
             'form' => $form,
@@ -54,30 +51,29 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    public function edit(Request $request, Product $product, ProductRepository $productRepository, 
+    int $id, BeehiveRepository $beehiveRepository): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-
+        $idBeehive = $product->getBeehive()->getId();
         if ($form->isSubmitted() && $form->isValid()) {
             $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_index', ['id' => $idBeehive], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
+            'idBeehive' => $idBeehive
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST', 'GET'])]
     public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $product->getId(), $request->request->get('_token'))) {
-            $productRepository->remove($product, true);
-        }
-
-        return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        $idBeehive = $product->getBeehive()->getId();
+        $productRepository->remove($product, true);
+        return $this->redirectToRoute('app_product_index', ['id'=>$idBeehive], Response::HTTP_SEE_OTHER);
     }
 }

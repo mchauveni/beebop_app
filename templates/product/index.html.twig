@@ -5,6 +5,7 @@
 
 {% block body %}
 	<h1>Votre production</h1>
+	<a href="{{ path('app_beehive_show', {'id' : beehive.id }) }}">Retour à la ruche {{ beehive.name }}</a>
 
 	{% for product in products %}
 
@@ -13,11 +14,11 @@
 		</p>
 		<span>{{ product.date ? product.date|date("d/m/Y") : '' }}</span>
 		<p>Quantité :
-			{{ product.quantity }}
-			kg</p>
+			{{ product.quantity|number_format(2, ' ', ',') }} kg</p>
 	</div>
 	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
+	<a href="{{ path('app_product_delete', {'id': product.id}) }}">Supprimer</a>
 </div>{% else %}
 
-<p>Pas de tâches !</p>{% endfor %}<div>
-<a href="{{ path('app_product_new', {'id': idBeehive}) }}">Ajouter une nouvelle production</a></div>{% endblock %}
+<p>Pas de production !</p>{% endfor %}<div>
+<a href="{{ path('app_product_new', {'id': beehive.id}) }}">Ajouter une nouvelle production</a></div>{% endblock %}
