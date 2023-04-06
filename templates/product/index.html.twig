@@ -7,18 +7,58 @@
 	<h1>Votre production</h1>
 	<a href="{{ path('app_beehive_show', {'id' : beehive.id }) }}">Retour à la ruche {{ beehive.name }}</a>
 
-	{% for product in products %}
+	{% if products is not empty %}
+		{% set miel = 0 %}
+		{% set pollen = 0 %}
+		{% set cire = 0 %}
 
-		<p>Type de production :
-			{{ product.type }}
-		</p>
-		<span>{{ product.date ? product.date|date("d/m/Y") : '' }}</span>
-		<p>Quantité :
-			{{ product.quantity|number_format(2, ',', ',') }} kg</p>
+		{% for product in products %}
+			{% if product.type == "miel" %}
+				{% set miel = miel + product.quantity %}
+			{% endif %}
+
+			{% if product.type == "cire" %}
+				{% set pollen = pollen + product.quantity %}
+			{% endif %}
+
+			{% if product.type == "pollen" %}
+				{% set cire = cire + product.quantity %}
+			{% endif %}
+		{% endfor %}
+
+		<div>
+		  <canvas id="myChart"></canvas>
+		</div>
+
+		{% block javascripts %}
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+			<script>
+			  const ctx = document.getElementById('myChart');
+
+			  new Chart(ctx, {
+			    type: 'pie',
+			    data: {
+			      labels: ['Miel', 'Pollen', 'Cire'],
+			      datasets: [{
+			        label: 'Quantité',
+			        data: [{{miel}}, {{pollen}}, {{cire}}],
+					backgroundColor: [
+    				  '#FEE12B',
+    				  '#F1E9D9',
+    				  '#F5D547'
+    				],
+			        borderWidth: 0
+			      }]
+			    }});
+			</script>
+		{% endblock %}
+	{% else %}
+		<p>Pas de production !</p>
+	{% endif %}
+	<div>
+		<a href="{{ path('app_product_new', {'id': beehive.id}) }}">Ajouter une nouvelle production</a>
 	</div>
-	<a href="{{ path('app_product_edit', {'id': product.id}) }}">Modifier</a>
-	<a href="{{ path('app_product_delete', {'id': product.id}) }}">Supprimer</a>
-</div>{% else %}
+{% endblock %}
 
-<p>Pas de production !</p>{% endfor %}<div>
-<a href="{{ path('app_product_new', {'id': beehive.id}) }}">Ajouter une nouvelle production</a></div>{% endblock %}
+
