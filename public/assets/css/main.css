@@ -7,151 +7,160 @@
 @import url(./beekeeper.css);
 @import url(./footer.css);
 @import url(./chart.css);
+@import url(./admin.css);
 
 @font-face {
-    font-family: k2d;
-    src: url('./font/K2D-Regular.ttf') format('truetype');
+  font-family: k2d;
+  src: url("./font/K2D-Regular.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: righteous;
-    src: url(./font/Righteous-Regular.ttf);
+  font-family: righteous;
+  src: url(./font/Righteous-Regular.ttf);
 }
 
 :root {
-    --dark: #222;
-    --yellow: #f3c10e;
-    --warn: rgb(235, 32, 32);
-    --ligth: #f5f5f5;
-    --grey: #5b5b5b;
-    font-size: calc(15px * 0.3vw);
-    font-family: k2d;
-    color: var(--ligth);
+  --dark: #222;
+  --yellow: #f3c10e;
+  --warn: rgb(235, 32, 32);
+  --ligth: #f5f5f5;
+  --grey: #5b5b5b;
+  font-size: calc(15px * 0.3vw);
+  font-family: k2d;
+  color: var(--ligth);
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    min-height: 100vh;
-    background: var(--dark);
-    background-image: url('./../img/bg/bg.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+  min-height: 100vh;
+  background: var(--dark);
+  background-image: url("./../img/bg/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header {
-    font-family: righteous;
-    margin-right: 1.5rem;
-    text-align: right;
+  font-family: righteous;
+  margin-right: 1.5rem;
+  text-align: right;
 }
 
 header h1 {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 header h1::before {
-    content: url('./../img/ico/icon.svg');
-    height: 100%;
+  content: url("./../img/ico/icon.svg");
+  height: 100%;
 }
 
-
 main {
-    width: 100%;
-    height: 100%;
-    padding: 0 25px;
+  width: 100%;
+  height: 100%;
+  padding: 0 25px;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 h1 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .subtitle {
-    font-size: 1.5rem;
-    padding: 25px 0px;
+  font-size: 1.5rem;
+  padding: 25px 0px;
 }
 
 .a-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .f-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .f-between {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .f-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-end {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .glass {
-    border: solid 2px var(--grey);
-    background: linear-gradient(134.25deg, rgba(255, 253, 253, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
-    backdrop-filter: blur(2.5px);
-    -webkit-backdrop-filter: blur(2.5px);
+  border: solid 2px var(--grey);
+  background: linear-gradient(
+    134.25deg,
+    rgba(255, 253, 253, 0.06) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
 }
 
 .cta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    background: var(--yellow);
-    border-radius: 10px;
-    padding: 10px 15px;
-    border: none;
-    font-family: k2d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  background: var(--yellow);
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: none;
+  font-family: k2d;
 }
 
 .warning {
-    background: var(--warn) !important;
+  background: var(--warn) !important;
 }
 
 .back {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    position: absolute;
-    top: 25px;
-    left: 25px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
 }
 
 .back::before {
-    content: '';
-    display: block;
-    background-image: url(./../img/ico/arrow.svg);
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 20px;
-    width: 20px;
+  content: "";
+  display: block;
+  background-image: url(./../img/ico/arrow.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 20px;
 }
 
 .more::after {
-    position: relative;
-    top: 2px;
-    content: url('./../img/ico/more.svg');
-    display: block;
-    width: auto;
-    height: 100%;
-    transform-origin: center;
-    transform: scale(0.8);
+  position: relative;
+  top: 2px;
+  content: url("./../img/ico/more.svg");
+  display: block;
+  width: auto;
+  height: 100%;
+  transform-origin: center;
+  transform: scale(0.8);
 }

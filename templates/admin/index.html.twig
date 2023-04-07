@@ -4,22 +4,30 @@
 {% endblock %}
 
 {% block body %}
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_logout') }}" class="back">Se deconnecter</a>
 
-	<a href="{{ path('admin_validation') }}">Valider les apiculteurs</a>
 	{# <a href="{{ path('appp_beekeeper_add') }}">Ajouter un apiculteur</a>
- #}
-	<div class="container p-4">
-		<a href="{{ path('app_logout') }}" class="btn btn-warning text-white fw-bold mb-3">Se deconnecter</a>
-		<section class="admin">
-			<ul clas="admin_beekeepers">
-		{% for beekeeper in beekeepers %}
-				<li>{{beekeeper.id}} - {{beekeeper.login}},
-				{{beekeeper.mail}}, nombre de ruchers :
-				{{beekeeper.apiaries| length}} 
-				<a href="{{path('admin_beekeeper_show', {'id': beekeeper.id }) }}">Voir plus</a>
-				</li>
-		{% endfor %}
-			</ul>
-		</section>
-	</div>
-{% endblock %}
+																																	 #}
+	<main>
+		<a href="{{ path('admin_validation') }}" class="cta list__add more">Valider les apiculteurs</a>
+		<div class="list__container f-column">
+			{% for beekeeper in beekeepers %}
+				<div class="list__item__wrapper f-between">
+					<div class="list__item">
+						<ul>
+							<li>{{beekeeper.id}}</li>
+							<li>{{beekeeper.login}}</li>
+							<li>{{beekeeper.mail}}</li>
+							<li>nombre de ruchers :
+								{{beekeeper.apiaries| length}}</li>
+						</ul>
+					</div>
+					<a href="{{path('admin_beekeeper_show', {'id': beekeeper.id }) }}" class="cta f-center">Voir plus</a>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+</main>{% endblock %}
