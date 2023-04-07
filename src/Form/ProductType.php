@@ -35,7 +35,8 @@ class ProductType extends AbstractType
             ->add('date', DateType::class, [
                 'input' => 'datetime_immutable', 'widget' => 'single_text',
                 'label' => 'Date de la collecte :',
-                'required' => true
+                'required' => true,
+                'attr' => ['class'=>'form__date']
             ])
         ;
     }

@@ -4,23 +4,27 @@
 {% endblock %}
 
 {% block body %}
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('app_task_index', {'id' : id}) }}" class="back">Retour</a>
+<main class="main">
 	<h1>Modifier une nouvelle tâche</h1>
 
 	{{ form_start(form) }}
-
-	<div class="form__wrapper">
+	<div class="form__wrapper f-column">
 		{{ form_label( form.type ) }}
 		{{ form_errors( form.type ) }}
 		{{ form_widget( form.type,  { 'attr' : { 'min': 3, 'max': 100 } } ) }}
 	</div>
 
-	<div class="form__wrapper">
+	<div class="form__wrapper f-column">
 		{{ form_label( form.description ) }}
 		{{ form_errors( form.description ) }}
 		{{ form_widget( form.description ) }}
 	</div>
 
-	<div class="form__wrapper">
+	<div class="form__wrapper f-column">
 		{{ form_label( form.doAt ) }}
 		{{ form_errors( form.doAt ) }}
 		{{ form_widget( form.doAt ) }}
@@ -29,11 +33,11 @@
 
 	{{ form_widget(form) }}
 
-	<div class="form__login">
+	<div class="f-between">
 		<a href="{{ path('app_task_index', {'id' : id}) }}" class="form__link">Retour aux tâches</a>
 		{# <a href="{{ path('app_task_index', {'id' : taskId}) }}" class="form__link">Retour au rucher</a>
- #}		<button type="submit" class="form__btn" formnovalidate>Modifier</button>
+ #}		<button type="submit" class="form__btn cta" formnovalidate>Modifier</button>
 	</div>
 	{{ form_end(form) }}
-
+</main>
 {% endblock %}
