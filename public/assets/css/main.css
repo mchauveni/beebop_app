@@ -6,6 +6,7 @@
 @import url(./beehive.css);
 @import url(./beekeeper.css);
 @import url(./footer.css);
+@import url(./admin.css);
 
 @font-face {
     font-family: k2d;
@@ -100,6 +101,11 @@ h1 {
 .f-column {
     display: flex;
     flex-direction: column;
+}
+
+.f-end {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .glass {

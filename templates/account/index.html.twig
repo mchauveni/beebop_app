@@ -4,49 +4,54 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="form__title">
-		Inscrivez-vous !
-	</h1>
-	{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.last_name ) }}
-		{{ form_errors( form.last_name ) }}
-		{{ form_widget( form.last_name,  { 'attr' : { 'min': 2, 'max': 100 } } ) }}
-	</div>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main>
+		<h2 class="subtitle">
+			Inscrivez-vous !
+		</h2>
+		{{ form_start(form) }}
 
-	<div class="form__wrapper">
-		{{ form_label( form.first_name ) }}
-		{{ form_errors( form.first_name ) }}
-		{{ form_widget( form.first_name,  { 'attr' : { 'min': 2, 'max': 100 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.last_name ) }}
+			{{ form_errors( form.last_name ) }}
+			{{ form_widget( form.last_name,  { 'attr' : { 'min': 2, 'max': 100 } } ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.login ) }}
-		{{ form_errors( form.login ) }}
-		{{ form_widget( form.login,  { 'attr' : { 'min': 3, 'max': 20 } } ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.first_name ) }}
+			{{ form_errors( form.first_name ) }}
+			{{ form_widget( form.first_name,  { 'attr' : { 'min': 2, 'max': 100 } } ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{{ form_label( form.mail ) }}
-		{{ form_errors( form.mail ) }}
-		{{ form_widget( form.mail ) }}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.login ) }}
+			{{ form_errors( form.login ) }}
+			{{ form_widget( form.login,  { 'attr' : { 'min': 3, 'max': 20 } } ) }}
+		</div>
 
-	<div class="form__wrapper">
-		{% for field in form.password %}
-			{{ form_label( field ) }}
-			{{ form_errors( field ) }}
-			{{ form_widget( field,  { 'attr' : { 'min': 8, 'max': 48 } } ) }}
-		{% endfor %}
-	</div>
+		<div class="form__wrapper f-column">
+			{{ form_label( form.mail ) }}
+			{{ form_errors( form.mail ) }}
+			{{ form_widget( form.mail ) }}
+		</div>
 
-	{{ form_widget(form) }}
-	<div class="form__login">
-		<a href="{{ path('app_login') }}" class="form__link">Retour à la page de connexion</a>
-		<button type="submit" class="form__btn">Inscription</button>
-	</div>
-	{{ form_end(form) }}
+		<div class="form__wrapper f-column">
+			{% for field in form.password %}
+				{{ form_label( field ) }}
+				{{ form_errors( field ) }}
+				{{ form_widget( field,  { 'attr' : { 'min': 8, 'max': 48 } } ) }}
+			{% endfor %}
+		</div>
 
+		{{ form_widget(form) }}
+		<div class="form__login f-between">
+			<a href="{{ path('app_login') }}" class="form__link">Retour à la page de connexion</a>
+			<button type="submit" class="cta">Inscription</button>
+		</div>
+		{{ form_end(form) }}
+	</main>
 
 {% endblock %}

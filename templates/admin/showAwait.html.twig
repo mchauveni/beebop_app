@@ -1,23 +1,35 @@
 {% extends "base.html.twig" %}
-{% block title %}Admin - Apiculteurs en attente détails{% endblock %}
+{% block title %}Admin - Apiculteurs en attente détails
+{% endblock %}
 {% block body %}
-<section class="adminAwait">
-		<h1 class="adminAwait__title">{{beekeeper.id}} - {{beekeeper.login}}</h1>
-	<div class="container p-4">
-			<a href="{{ path('admin_validation') }}" class="btn btn-warning text-white fw-bold mb-3">Retour</a>
+
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<main>
+		<h2 class="adminAwait__title">{{beekeeper.id}}
+			-
+			{{beekeeper.login}}</h1>
+		<a href="{{ path('admin_validation') }}" class="back">Retour</a>
+		<div class="list__container">
 			<ul clas="adminAwait_beekeeper">
-				<li>{{beekeeper.lastName}} {{beekeeper.firstName}}</li>
+				<li>{{beekeeper.lastName}}
+					{{beekeeper.firstName}}</li>
 				<li>{{beekeeper.mail}}</li>
-				<li>{{beekeeper.apiaries | length}} ruchers</li>
-					{% set sum = 0 %}    
-					{% for apiary in apiaries %}
-						{% set sum = sum + apiary.beehives| length %}
-					{% endfor %}
-					<li> {{sum}} ruches </li>
+				<li>{{beekeeper.apiaries | length}}
+					ruchers</li>
+				{% set sum = 0 %}
+				{% for apiary in apiaries %}
+					{% set sum = sum + apiary.beehives| length %}
+				{% endfor %}
+				<li>
+					{{sum}}
+					ruches
+				</li>
 				{# just for dev bcs it's easier to see, to remove in prod #}
 				<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
 			</ul>
-		<a href="{{ path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
-	</div>
-</section>
+			<a href="{{ path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
+		</div>
+	</main>
 {% endblock %}

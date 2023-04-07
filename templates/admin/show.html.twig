@@ -1,26 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin - Beekeeper {{beekeeper.login}}
+{% block title %}Admin - Beekeeper
+	{{beekeeper.login}}
 {% endblock %}
 
 {% block body %}
-<section class="adminBeekeeper">
-		<h1 class="adminBeekeeper_title">{{beekeeper.id}} - {{beekeeper.login}}</h1>
-	<div class="container p-4">
-		<a href="{{ path('admin_dashboard') }}" class="btn btn-warning text-white fw-bold mb-3">Retour</a>
-		<ul clas="adminBeekeeper_beekeeper">
-			<li>{{beekeeper.lastName}} {{beekeeper.firstName}}</li>
-			<li>{{beekeeper.mail}}</li>
-			<li>{{beekeeper.apiaries | length}} ruchers</li>
-			{% set sum = 0 %}    
-			{% for apiary in apiaries %}
-				{% set sum = sum + apiary.beehives| length %}
-			{% endfor %}
-			<li> {{sum}} ruches </li>
-			{# just for dev bcs it's easier to see, to remove in prod #}
-			<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
-		</ul>
-		<a href="{{ path('admin_beekeeper_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
-	</div>
-</section>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('admin_dashboard') }}" class="back">Retour</a>
+	<main>
+		<h2 class="subtitle">{{beekeeper.id}}
+			-
+			{{beekeeper.login}}</h2>
+		<div class="glass admin__wrapper list__wrapper f-column">
+
+			<ul class="list__wrapper f-column">
+				<li>{{beekeeper.lastName}}
+					{{beekeeper.firstName}}</li>
+				<li>{{beekeeper.mail}}</li>
+				<li>{{beekeeper.apiaries | length}}
+					ruchers</li>
+				{% set sum = 0 %}
+				{% for apiary in beekeeper.apiaries %}
+					{% set sum = sum + apiary.beehives| length %}
+				{% endfor %}
+				<li>
+					{{sum}}
+					ruches
+				</li>
+				{# just for dev bcs it's easier to see, to remove in prod #}
+				<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
+			</ul>
+			<div class="f-end">
+				<a href="{{ path('admin_beekeeper_delete', {'id': beekeeper.id }) }}" class="cta warning">Supprimer l'utilisateur</a>
+			</div>
+		</div>
+	</main>
 {% endblock %}
