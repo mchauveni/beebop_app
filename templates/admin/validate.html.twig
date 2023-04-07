@@ -17,16 +17,21 @@
 		<div>
 			<ul class="list__container f-column">
 				{% for beekeeper in beekeepers %}
-					<div class="list__item__wrapper f-between">
+					<li class="list__item__wrapper f-between">
 						<div class="list__item list__item__component">
-							<li>{{beekeeper.login}}</li>
-							<li>{{beekeeper.mail}}
-							</li>
-							<a href="{{path('admin_beekeeper_await_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
-							<a href="{{path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}">Supprimer</a>
+							<ul class="list__ul">
+								<li>{{beekeeper.login}}</li>
+								<li>{{beekeeper.mail}}</li>
+								<li>
+									<a href="{{path('admin_beekeeper_await_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
+									|
+									<a href="{{path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}">Supprimer</a>
+								</li>
+							</ul>
+
 						</div>
 						<a href="{{path('admin_beekeeper_confirm', {'id': beekeeper.id }) }}" class="cta">Valider</a>
-					</div>
+					</li>
 				{% endfor %}
 			</ul>
 		</div>

@@ -95,6 +95,6 @@ color: '#FFFFFF'
 			{% endblock %}
 		{% else %}
 			<p>Pas de production !</p>
+			<a href="{{ path('app_product_new', {'id': beekeeperId})}}" class="cta" style="margin-top: 1.2rem">Ajouter votre production</a>
 		{% endif %}
-
 	{% endblock %}

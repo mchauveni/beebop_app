@@ -7,29 +7,36 @@
 		<h1 class="header__name">Beebop</h1>
 	</header>
 	<main>
-		<h2 class="adminAwait__title">{{beekeeper.id}}
+		<h1 class="subtitle">
+			{{beekeeper.id}}
 			-
 			{{beekeeper.login}}</h1>
 		<a href="{{ path('admin_validation') }}" class="back">Retour</a>
 		<div class="list__container">
-			<ul clas="adminAwait_beekeeper">
-				<li>{{beekeeper.lastName}}
-					{{beekeeper.firstName}}</li>
-				<li>{{beekeeper.mail}}</li>
-				<li>{{beekeeper.apiaries | length}}
-					ruchers</li>
-				{% set sum = 0 %}
-				{% for apiary in apiaries %}
-					{% set sum = sum + apiary.beehives| length %}
-				{% endfor %}
+			<ul class="list__await">
 				<li>
-					{{sum}}
-					ruches
+					{{beekeeper.lastName}}
+					{{beekeeper.firstName}}
+				</li>
+				<li>
+					{{beekeeper.mail}}
+				</li>
+				<li class="list__row">
+					<span>{{beekeeper.apiaries | length}}
+						ruchers</span>
+					{% set sum = 0 %}
+					{% for apiary in apiaries %}
+						<span>{% set sum = sum + apiary.beehives| length %}
+						{% endfor %}
+						{{sum}}
+						ruches</span>
 				</li>
 				{# just for dev bcs it's easier to see, to remove in prod #}
-				<li>{{beekeeper.verified ? 'validé' : 'en attente de validation' }}</li>
+				<li>
+					{{beekeeper.verified ? 'Validé' : 'En attente de validation' }}
+				</li>
 			</ul>
-			<a href="{{ path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}" class="btn btn-warning text-white fw-bold mb-3">Supprimer l'utilisateur</a>
+			<a href="{{ path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}" class="cta warning">Supprimer l'utilisateur</a>
 		</div>
 	</main>
 {% endblock %}

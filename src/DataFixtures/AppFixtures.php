@@ -118,14 +118,14 @@ class AppFixtures extends Fixture
         // création d'un nouvel admin
         $admin = new Beekeeper();
         $admin
-            ->setLogin("test")
+            ->setLogin("SuperAdmin")
             ->setLastName($faker->lastName())
             ->setFirstName($faker->firstName())
             ->setMail($faker->email())
-            ->setRoles(['ROLE_BEEKEEPER'])
+            ->setRoles(['ROLE_ADMIN'])
             ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTimeInInterval('-20 days', '+10 days')))
             ->setVerified(true)
-            ->setPassword($this->passwordHasher->hashPassword($admin, 'test'));
+            ->setPassword($this->passwordHasher->hashPassword($admin, 'SuperAdmin1234'));
         // persistence de l'entity
         $manager->persist($admin);
         // envoie de l'entity
