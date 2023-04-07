@@ -13,7 +13,7 @@
 			<li>{{beekeeper.mail}}</li>
 			<li>{{beekeeper.apiaries | length}} ruchers</li>
 			{% set sum = 0 %}    
-			{% for apiary in apiaries %}
+			{% for apiary in beekeeper.apiaries %}
 				{% set sum = sum + apiary.beehives| length %}
 			{% endfor %}
 			<li> {{sum}} ruches </li>
