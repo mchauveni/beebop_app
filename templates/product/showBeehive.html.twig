@@ -15,7 +15,7 @@
 		<div class="apiaries__wrapper">
 
 			<a href="{{ path('app_product_new', {'id':beehive.id}) }}" class="cta list__add">Ajouter une production</a>
-				
+
 			<div class="chart">
 				<canvas id="production_chart"></canvas>
 			</div>
@@ -29,11 +29,11 @@
 					{% if product.type == "miel" %}
 						{% set miel = miel + product.quantity %}
 					{% endif %}
-		
+
 					{% if product.type == "pollen" %}
 						{% set pollen = pollen + product.quantity %}
 					{% endif %}
-		
+
 					{% if product.type == "cire" %}
 						{% set cire = cire + product.quantity %}
 					{% endif %}
@@ -55,25 +55,40 @@
 
 				{% block javascripts %}
 					<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-				
+
 					<script>
-					  const ctx = document.getElementById('production_chart');
-				
-					  new Chart(ctx, {
-					    type: 'pie',
-					    data: {
-					      labels: ['Miel', 'Pollen', 'Cire'],
-					      datasets: [{
-					        label: 'Quantité',
-					        data: [{{miel}}, {{pollen}}, {{cire}}],
-							backgroundColor: [
-							  '#FEE12B',
-							  '#F1E9D9',
-							  '#F5D547'
-							],
-					        borderWidth: 0
-					      }]
-					    }});
+						const ctx = document.getElementById('production_chart');
+
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: [
+'Miel', 'Pollen', 'Cire'
+],
+datasets: [
+{
+label: 'Quantité',
+data: [
+{{ miel }}, {{ pollen }}, {{ cire }}
+],
+backgroundColor: [
+'#FEE12B', '#F1E9D9', '#F5D547'
+],
+borderWidth: 0
+}
+]
+},
+options: {
+plugins: {
+legend: {
+labels: {
+color: '#FEE12B',
+boxHeight: '100px'
+}
+}
+}
+}
+});
 					</script>
 				{% endblock %}
 

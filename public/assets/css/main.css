@@ -129,6 +129,7 @@ h1 {
   padding: 10px 15px;
   border: none;
   font-family: k2d;
+  color: black !important;
 }
 
 .warning {
