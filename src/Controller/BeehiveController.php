@@ -43,6 +43,7 @@ class BeehiveController extends AbstractController
             'beehive' => $beehive,
             'form' => $form,
             'idApiary' => $idApiary,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -59,8 +60,8 @@ class BeehiveController extends AbstractController
         return $this->render('beehive/show.html.twig', [
             'beehive' => $beehive,
             'apiary' => $apiary[0],
-            'tasks' => $tasks
-
+            'tasks' => $tasks,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -82,6 +83,7 @@ class BeehiveController extends AbstractController
         return $this->renderForm('beehive/edit.html.twig', [
             'beehive' => $beehive,
             'form' => $form,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 

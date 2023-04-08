@@ -19,10 +19,10 @@
 					<td>{{ beekeeper.lastName }}</td>
 					<td>{{ beekeeper.firstName }}</td>
 				</tr>
-		{# 		<tr class="account__wrapper passwd">
-					<td style="-webkit-text-security: disc !important">YourPassWord</td>
-					{{ beekeeper.password }}
-				</tr> #}
+				{# 		<tr class="account__wrapper passwd">
+													<td style="-webkit-text-security: disc !important">YourPassWord</td>
+													{{ beekeeper.password }}
+												</tr> #}
 				<tr class="account__wrapper passwd">
 					<td>{{ beekeeper.login }}</td>
 				</tr>
@@ -34,7 +34,19 @@
 		<a href="{{ path('app_beekeeper_index') }}" class='back'>Retour</a>
 		<div class='f-between'>
 			<a href="{{ path('app_logout') }}">Se déconnecter</a>
-			{{ include('beekeeper/_delete_form.html.twig') }}
 		</div>
 	</main>
+	<footer>
+		<nav>
+			<a href="{{ path('app_apiary_index') }}">
+				<div class="nav_item nav__beehive"></div>
+			</a>
+			<a href="{{ path('app_product_index', {'id': idBeekeeper}) }}">
+				<div class="nav_item nav__prod"></div>
+			</a>
+			<a href="{{ path('app_beekeeper_show', {'id': idBeekeeper} ) }}">
+				<div class="nav_item nav__account"></div>
+			</a>
+		</nav>
+	</footer>
 {% endblock %}

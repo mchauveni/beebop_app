@@ -34,4 +34,17 @@
 		</div>
 		{{ form_end(form) }}
 	</main>
+	<footer>
+		<nav>
+			<a href="{{ path('app_apiary_index') }}">
+				<div class="nav_item nav__beehive"></div>
+			</a>
+			<a href="{{ path('app_product_index', {'id': idBeekeeper}) }}">
+				<div class="nav_item nav__prod"></div>
+			</a>
+			<a href="{{ path('app_beekeeper_show', {'id': idBeekeeper} ) }}">
+				<div class="nav_item nav__account"></div>
+			</a>
+		</nav>
+	</footer>
 {% endblock %}

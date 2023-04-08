@@ -25,6 +25,7 @@ class ApiaryController extends AbstractController
 
         return $this->render('apiary/index.html.twig', [
             'apiaries' => $apiaries,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -35,6 +36,7 @@ class ApiaryController extends AbstractController
         $apiary = new Apiary();
         $form = $this->createForm(ApiaryType::class, $apiary);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $apiary = $form->getData();
             $apiary
@@ -48,6 +50,7 @@ class ApiaryController extends AbstractController
         return $this->renderForm('apiary/new.html.twig', [
             'apiary' => $apiary,
             'form' => $form,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -63,6 +66,7 @@ class ApiaryController extends AbstractController
         return $this->render('beehive/index.html.twig', [
             'apiary' => $apiary,
             'beehives' => $beehives,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -83,6 +87,7 @@ class ApiaryController extends AbstractController
         return $this->renderForm('apiary/edit.html.twig', [
             'apiary' => $apiary,
             'form' => $form,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 

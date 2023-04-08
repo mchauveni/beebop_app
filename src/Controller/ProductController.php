@@ -41,6 +41,7 @@ class ProductController extends AbstractController
             'beehive' => $beehives,
             'products' => $products,
             'beekeeperId' => $beekeeperId,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -55,7 +56,8 @@ class ProductController extends AbstractController
             'products' => $productRepository->findProductsByBeehiveId($id),
             'beehives' => $beehives,
             'apiary' => $apiary,
-            'beekeeper' => $beekeeper
+            'beekeeper' => $beekeeper,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -67,7 +69,8 @@ class ProductController extends AbstractController
         return $this->render('product/showBeehive.html.twig', [
             'beehive' => $beehive,
             'products' => $products,
-            'apiary' => $beehive->getApiary()->getId()
+            'apiary' => $beehive->getApiary()->getId(),
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -97,7 +100,8 @@ class ProductController extends AbstractController
         return $this->renderForm('product/new.html.twig', [
             'products' => $products,
             'form' => $form,
-            'idBeehive' => $id
+            'idBeehive' => $id,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -123,12 +127,13 @@ class ProductController extends AbstractController
         return $this->renderForm('product/edit.html.twig', [
             'product' => $product,
             'form' => $form,
-            'idBeehive' => $id
+            'idBeehive' => $id,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
     #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST', 'GET'])]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    public function delete(Product $product, ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 

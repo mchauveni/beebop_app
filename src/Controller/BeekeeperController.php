@@ -24,11 +24,12 @@ class BeekeeperController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $beekeeper = $this->getUser();
         $status = $beekeeper->isVerified();
-        if($status){
+        if ($status) {
             return $this->render('beekeeper/index.html.twig', [
                 'beekeeper' => $beekeeper,
+                'idBeekeeper' => $this->getUser()->getId(),
             ]);
-        }else{
+        } else {
             //$this->denyAccessUnlessGranted($status, false);
             //throw $this->createAccessDeniedException('No access for you!');
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
@@ -99,7 +100,7 @@ class BeekeeperController extends AbstractController
         $beekeeper
             ->setVerified(true);
         $em->persist($beekeeper);
-        $em->flush();       
+        $em->flush();
         return $this->render('admin/show.html.twig', [
             'beekeeper' => $beekeeper,
         ]);
@@ -130,15 +131,17 @@ class BeekeeperController extends AbstractController
 
         $form = $this->createForm(BeekeeperType::class, $beekeeper);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $beekeeperRepository->save($beekeeper, true);
             $idBeekeeper = $beekeeper->getId();
 
-            return $this->redirectToRoute('app_beekeeper_index', ['id'=>$idBeekeeper], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_beekeeper_index', ['id' => $idBeekeeper], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('beekeeper/edit.html.twig', [
             'beekeeper' => $beekeeper,
             'form' => $form,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
@@ -146,10 +149,11 @@ class BeekeeperController extends AbstractController
     public function show(Request $request, Beekeeper $beekeeper, int $id, BeekeeperRepository $beekeeperRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
-        
+
         $beekeeper = $this->getUser();
         return $this->render('beekeeper/show.html.twig', [
             'beekeeper' => $beekeeper,
+            'idBeekeeper' => $this->getUser()->getId(),
         ]);
     }
 
