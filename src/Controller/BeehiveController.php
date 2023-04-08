@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Apiary;
 use App\Entity\Beehive;
+use App\Entity\Beekeeper;
 use App\Form\BeehiveType;
 use App\Repository\ApiaryRepository;
+use App\Repository\BeekeeperRepository;
 use App\Repository\BeehiveRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,10 +20,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BeehiveController extends AbstractController
 {
     #[Route('/{id}/new', name: 'app_beehive_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ApiaryRepository $apiaryRepository, $id, EntityManagerInterface $em): Response
+    public function new(Request $request, BeekeeperRepository $beekeeperRepository, ApiaryRepository $apiaryRepository, $id, EntityManagerInterface $em): Response
     {
-        $user = $this->getUser()->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $idApiary = $id;
+        $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
         $beehive = new Beehive();
         $form = $this->createForm(BeehiveType::class, $beehive);
         $form->handleRequest($request);

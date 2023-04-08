@@ -5,22 +5,36 @@
 
 {% block body %}
 
-	<a href="{{ path('admin_dashboard') }}">Retour</a>
+	<header class="header">
+		<h1 class="header__name">Beebop</h1>
+	</header>
+	<a href="{{ path('admin_dashboard') }}" class="back">Retour</a>
 
-<section class="validate">
-<h1 class="validate_title"> Apiculteurs en attente </h1>
-	<div class="container p-4">
-		<a href="{{ path('app_logout') }}" class="btn btn-warning text-white fw-bold mb-3">Se deconnecter</a>            
-        <ul clas="validate_beekeepers">
-		{% for beekeeper in beekeepers %}
-				<li>{{beekeeper.login}},
-				    {{beekeeper.mail}} 
-				</li>
-				<a href="{{path('admin_beekeeper_await_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
-				<a href="{{path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}">Supprimer</a>
-				<a href="{{path('admin_beekeeper_confirm', {'id': beekeeper.id }) }}">Valider</a>
-		{% endfor %}
-        </ul>
-	</div>
-</section>
+	<main>
+		<h2 class="subtitle">
+			Apiculteurs en attente
+		</h2>
+		<div>
+			<ul class="list__container f-column">
+				{% for beekeeper in beekeepers %}
+					<li class="list__item__wrapper f-between">
+						<div class="list__item list__item__component">
+							<ul class="list__ul">
+								<li>{{beekeeper.login}}</li>
+								<li>{{beekeeper.mail}}</li>
+								<li>
+									<a href="{{path('admin_beekeeper_await_show', {'id': beekeeper.id }) }}">Voir toutes les infos</a>
+									|
+									<a href="{{path('admin_beekeeper_validate_delete', {'id': beekeeper.id }) }}">Supprimer</a>
+								</li>
+							</ul>
+
+						</div>
+						<a href="{{path('admin_beekeeper_confirm', {'id': beekeeper.id }) }}" class="cta">Valider</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<a href="{{ path('app_logout') }}" class="cta warning">Se deconnecter</a>
+	</main>
 {% endblock %}

@@ -19,7 +19,8 @@ class TaskType extends AbstractType
             ->add('description',  TextareaType::class, ['label' => 'Description de la tâche :'])
             ->add('doAt', DateType::class, [
                 'input' => 'datetime_immutable', 'widget' => 'single_text',
-                'label' => 'Date de la tâche :'
+                'label' => 'Date de la tâche :',
+                'attr' => ['class'=>'form__date']
             ]);
     }
 

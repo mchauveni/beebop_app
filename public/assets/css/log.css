@@ -10,7 +10,7 @@ label {
     text-align: start;
 }
 
-:is(.form__input, .form__wrapper input, .form__wrapper select) {
+:is(.form__input, .form__wrapper input, .form__wrapper select, .form__wrapper textarea, .form__date) {
     width: 100%;
     background: var(--dark);
     border: solid 1px var(--grey);

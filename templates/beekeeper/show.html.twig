@@ -19,9 +19,12 @@
 					<td>{{ beekeeper.lastName }}</td>
 					<td>{{ beekeeper.firstName }}</td>
 				</tr>
-				<tr class="account__wrapper passwd">
+		{# 		<tr class="account__wrapper passwd">
 					<td style="-webkit-text-security: disc !important">YourPassWord</td>
-					{# {{ beekeeper.password }} #}
+					{{ beekeeper.password }}
+				</tr> #}
+				<tr class="account__wrapper passwd">
+					<td>{{ beekeeper.login }}</td>
 				</tr>
 				<tr class="account__wrapper mail">
 					<td>{{ beekeeper.mail }}</td>

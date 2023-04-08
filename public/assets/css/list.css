@@ -1,84 +1,102 @@
 .list__container {
-    height: 60vh;
-    overflow-y: scroll;
-    gap: 15px;
+  height: 60vh;
+  overflow-y: scroll;
+  gap: 15px;
 }
 
 .list__add {
-    color: var(--dark);
-    margin: 15px 0px;
-    font-size: 1.1rem;
+  color: var(--dark);
+  margin: 15px 0px;
+  font-size: 1.1rem;
 }
 
 .list__wrapper {
-    gap: 15px;
+  gap: 15px;
 }
 
 .list__item__wrapper {
-    gap: 30px;
-    align-items: stretch !important;
+  gap: 30px;
+  align-items: stretch !important;
 }
 
 .list__item__wrapper .list__item {
-    align-items: center;
-    width: 100%;
-    padding: 15px;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
 }
 
 .list__item__wrapper .cta {
-    aspect-ratio: 1/1;
+  aspect-ratio: 1/1;
+}
+.list__ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .list__item {
-    /* font-size: 0.8rem; */
-    width: 100%;
-    font-family: k2d;
-    color: var(--dark);
-    background: var(--yellow);
-    border-radius: 10px;
-    padding: 10px 15px;
-    gap: 15px;
-    border: none;
+  /* font-size: 0.8rem; */
+  width: 100%;
+  font-family: k2d;
+  color: var(--dark);
+  background: var(--yellow);
+  border-radius: 10px;
+  padding: 10px 15px;
+  gap: 15px;
+  border: none;
 }
-
 .list__item__title {
-    font-size: 1.1rem;
-    font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 .list__item__info {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.list__item__info::before {
-    display: block;
-    width: auto;
-    height: 100%;
-    transform-origin: center;
-    transform: scale(0.8);
+.list__row {
+  display: flex;
+  justify-content: space-between;
+}
 
+.list__await {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.list__await li {
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid #cccc;
+}
+.list__await li:last-child {
+  margin-bottom: 1.2rem;
+}
+.list__item__info::before {
+  display: block;
+  width: auto;
+  height: 100%;
+  transform-origin: center;
+  transform: scale(0.8);
 }
 
 .list__loc::before {
-    content: url('./../img/ico/loc.svg');
+  content: url("./../img/ico/loc.svg");
 }
 
 .list__quantity::before {
-    content: url('./../img/ico/beehive.svg');
+  content: url("./../img/ico/beehive.svg");
 }
 
 .list__item__cta {
-    height: 30px;
+  height: 30px;
 }
-
 
 :is(.list__item__component, .list__item__menu) {
-    gap: 10px
+  gap: 10px;
 }
 
-
 .close {
-    display: none !important;
+  display: none !important;
 }

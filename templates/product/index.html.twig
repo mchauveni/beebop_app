@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Beebop - Vos ruchers
+{% block title %}Beebop - Votre production
 {% endblock %}
 
 {% block body %}
@@ -11,56 +11,90 @@
 	<main class="apiaries">
 		<h2 class="subtitle">Suivi de production</h2>
 
-	{% if products is not empty %}
-		{% set miel = 0 %}
-		{% set pollen = 0 %}
-		{% set cire = 0 %}
+		{% if products is not empty %}
+			{% set miel = 0 %}
+			{% set pollen = 0 %}
+			{% set cire = 0 %}
 
-		{% for product in products %}
-			{% if product.type == "miel" %}
-				{% set miel = miel + product.quantity %}
-			{% endif %}
+			{% for product in products %}
+				{% if product.type == "miel" %}
+					{% set miel = miel + product.quantity %}
+				{% endif %}
 
-			{% if product.type == "pollen" %}
-				{% set pollen = pollen + product.quantity %}
-			{% endif %}
+				{% if product.type == "pollen" %}
+					{% set pollen = pollen + product.quantity %}
+				{% endif %}
 
-			{% if product.type == "cire" %}
-				{% set cire = cire + product.quantity %}
-			{% endif %}
-		{% endfor %}
+				{% if product.type == "cire" %}
+					{% set cire = cire + product.quantity %}
+				{% endif %}
+			{% endfor %}
 
-		<div class="chart">
-		  <canvas id="myChart"></canvas>
-		</div>
+			<div class="chart">
+				<canvas id="myChart"></canvas>
+			</div>
 
-		{% block javascripts %}
-			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<div class="apiaries__wrapper">
+				<div class="list__container f-column">
+					{% for apiary in apiaries %}
+						<a href="{{ path('app_product_by_apiary_index', {'id': apiary.id}) }}">
+							<div class="list__item__component f-column">
+								<div class="list__item f-column">
+									<span class="list__item__title">{{ apiary.name }}</span>
+									<p class="list__item__info list__quantity">{{  apiary.beehives | length }}</p>
 
-			<script>
-			  const ctx = document.getElementById('myChart');
+								</div>
+							</div>
+						</a>
+					{% else %}
 
-			  new Chart(ctx, {
-			    type: 'pie',
-			    data: {
-			      labels: ['Miel', 'Pollen', 'Cire'],
-			      datasets: [{
-			        label: 'Quantité',
-			        data: [{{miel}}, {{pollen}}, {{cire}}],
-					backgroundColor: [
-    				  '#FEE12B',
-    				  '#F1E9D9',
-    				  '#F5D547'
-    				],
-			        borderWidth: 0
-			      }]
-			    }});
-			</script>
-		{% endblock %}
-	{% else %}
-		<p>Pas de production !</p>
-	{% endif %}
+						<p class="apiaries__empty">Vous n'avez aucun ruchers !</p>
 
-{% endblock %}
+					{% endfor %}
 
 
+				</div>
+			</div>
+
+			{% block javascripts %}
+				<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+				<script>
+					const ctx = document.getElementById('myChart');
+
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: [
+'Miel', 'Pollen', 'Cire'
+],
+datasets: [
+{
+label: 'Quantité',
+data: [
+{{ miel }}, {{ pollen }}, {{ cire }}
+],
+backgroundColor: [
+'#FEE12B', '#F1E9D9', '#F5D547'
+],
+borderWidth: 0
+}
+]
+},
+options: {
+plugins: {
+legend: {
+labels: {
+color: '#FFFFFF'
+}
+}
+}
+}
+});
+				</script>
+			{% endblock %}
+		{% else %}
+			<p>Pas de production !</p>
+			<a href="{{ path('app_product_new', {'id': beekeeperId})}}" class="cta" style="margin-top: 1.2rem">Ajouter votre production</a>
+		{% endif %}
+	{% endblock %}

@@ -15,12 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/product')]
-class ProductController extends AbstractController {
+class ProductController extends AbstractController
+{
     #[Route('/{id}', name: 'app_product_index', methods: ['GET', 'POST'])]
-    public function index(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response {
+    public function index(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response
+    {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 
         $apiaries = $apiaryRepository->findApiariesByBeekeeper($id);
+
+        $beekeeperId = $id;
 
         $beehives = [];
         foreach ($apiaries as $apiary) {
@@ -35,12 +39,14 @@ class ProductController extends AbstractController {
         return $this->render('product/index.html.twig', [
             'apiaries' => $apiaries,
             'beehive' => $beehives,
-            'products' => $products
+            'products' => $products,
+            'beekeeperId' => $beekeeperId,
         ]);
     }
 
     #[Route('/{id}/show', name: 'app_product_by_apiary_index', methods: ['GET', 'POST'])]
-    public function show(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response {
+    public function show(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response
+    {
         $apiary = $apiaryRepository->find($id);
         $beehives = $beehiveRepository->findBeehivesByApiary($id);
         $beekeeper = $apiary->getBeekeeper()->getId();
@@ -54,7 +60,8 @@ class ProductController extends AbstractController {
     }
 
     #[Route('/{id}/showBeehive', name: 'app_product_by_beehive_show', methods: ['GET', 'POST'])]
-    public function showByBeehive(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response {
+    public function showByBeehive(ProductRepository $productRepository, BeehiveRepository $beehiveRepository, ApiaryRepository $apiaryRepository, int $id): Response
+    {
         $beehive = $beehiveRepository->find($id);
         $products = $productRepository->findProductsByBeehiveId($id);
         return $this->render('product/showBeehive.html.twig', [
@@ -77,7 +84,6 @@ class ProductController extends AbstractController {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
-        $beehive = $beehiveRepository->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product
@@ -122,7 +128,8 @@ class ProductController extends AbstractController {
     }
 
     #[Route('/{id}/delete', name: 'app_product_delete', methods: ['POST', 'GET'])]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response {
+    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
+    {
         $this->denyAccessUnlessGranted('ROLE_BEEKEEPER');
 
         $idBeehive = $product->getBeehive()->getId();
